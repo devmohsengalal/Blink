@@ -1,11 +1,11 @@
 {
-  "accountUrl": "https://blinkapp-account.azurewebsites.net",
-  "cloudUrl": "https://blinkapp-cloud.azurewebsites.net",
-  "accidentUrl": "https://blinkapp-accident.azurewebsites.net",
-  "incidentUrl": "https://blinkapp-incident.azurewebsites.net",
-  "tripUrl": "https://blinkapp-trip.azurewebsites.net",
-  "userUrl": "https://blinkapp-enduser.azurewebsites.net",
-  "RoleUrl": "https://blinkapp-role.azurewebsites.net",
-  "vehicleUrl": "https://blinkapp-vehicle.azurewebsites.net",
-  "notificationUrl": "https://blinkapp-notification.azurewebsites.net"
+  "accountUrl": "https://blinkapp-account-staging.azurewebsites.net",
+  "cloudUrl": "https://blinkapp-cloud-staging.azurewebsites.net",
+  "accidentUrl": "https://blinkapp-accident-staging.azurewebsites.net",
+  "incidentUrl": "https://blinkapp-incident-staging.azurewebsites.net",
+  "tripUrl": "https://blinkapp-trip-staging.azurewebsites.net",
+  "userUrl": "https://blinkapp-enduser-staging.azurewebsites.net",
+  "RoleUrl": "https://blinkapp-role-staging.azurewebsites.net",
+  "vehicleUrl": "https://blinkapp-vehicle-staging.azurewebsites.net",
+  "notificationUrl": "https://blinkapp-notification-staging.azurewebsites.net"
 }
