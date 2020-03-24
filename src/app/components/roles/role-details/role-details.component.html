@@ -1,0 +1,26 @@
+<div class="modal-header">
+  <h4 class="modal-title">Role Details</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+      <div class="card">
+        <div class="card-header b-l-primary border-5">
+          <h5>{{role?.name}}</h5>
+        </div>
+        <div class="card-body text-center" *ngIf="altText">
+          No Content is here 
+        </div>
+        <div class="card-body" *ngIf="!altText">
+          <p><span>Name:</span> {{role?.name}}</p>
+          <p><span>Added By Name:</span> {{role?.addedByName}}</p>
+          <p><span>Added Date:</span> {{role?.addedDate}}</p>
+          <p><span>Modified By Name:</span> {{role?.modifiedByName}}</p>
+          <p><span>Modified Date:</span> {{role?.modifiedDate}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Close</button>
+    </div>

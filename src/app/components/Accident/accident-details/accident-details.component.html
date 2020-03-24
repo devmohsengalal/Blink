@@ -1,0 +1,33 @@
+<div class="modal-header">
+  <h4 class="modal-title">Accident Details</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="card">
+    <div class="card-header b-l-primary border-5">
+      <h5>{{accidentDetails.endUser?.name}}</h5>
+    </div>
+    <div class="card-body text-center" *ngIf="altText">
+      No Content is here
+    </div>
+    <div class="card-body">
+      <p><span>Name:</span> {{accidentDetails.endUser?.name}}</p>
+      <p><span>Phone:</span> {{accidentDetails.endUser?.phone}}</p>
+      <p><span>Latitude:</span> {{accidentDetails?.latitude}}</p>
+      <p><span>Longitude:</span> {{accidentDetails?.longitude}}</p>
+      <p><span>Date:</span> {{accidentDetails?.date | date}}</p>
+      <p><span>Time:</span> {{accidentDetails?.date | date:'shortTime'}}</p>
+      <p><span>Severity:</span> {{accidentDetails?.severity}}</p>
+      <p><span>Cell Towe Info:</span> {{accidentDetails.cellTowerInfo?.mcc}} -
+        {{accidentDetails.cellTowerInfo?.mnc}}</p>
+      <p><span>Cell Lac:</span> {{accidentDetails.cellTowerInfo?.cellLac}}</p>
+      <p><span>Cell Date:</span> {{accidentDetails.cellTowerInfo?.date}}</p>
+      <p><span>Reported By:</span> {{accidentDetails?.reportedBy}}</p>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Close</button>
+</div>

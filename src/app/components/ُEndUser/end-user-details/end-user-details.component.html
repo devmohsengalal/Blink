@@ -1,0 +1,53 @@
+<div class="modal-header">
+  <h4 class="modal-title">End User Details</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="card">
+    <div class="card-header b-l-primary border-5">
+      <h5>{{userDetails?.name}}
+      </h5>
+    </div>
+    <div class="card-body text-center" *ngIf="altText">
+      No Content is here
+    </div>
+    <div class="card-body" *ngIf="!altText">
+      <p><span>Name:</span> {{userDetails?.name}}</p>
+      <p><span>Customer Name:</span> {{userDetails?.customer.name}}</p>
+      <p><span>Country:</span> {{userDetails?.country}}</p>
+      <p><span>Email:</span> {{userDetails?.email}}</p>
+      <p><span>Phone Number:</span> {{userDetails?.phone}}</p>
+      <p><span>Group:</span> {{userDetails?.endUserGroupDto.name}}</p>
+      <p><span>isActive:</span> {{userDetails?.isActive}}</p>
+    </div>
+  </div>
+</div>
+<div class="card">
+  <div class="card-header">
+    <h5>Meta Data</h5>
+    <button type="button" class="btn btn-outline-primary expand-btn" (click)="isCollapsed = !isCollapsed"
+      [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+      Toggle
+    </button>
+  </div>
+  <div class="card-body">
+    <div id="collapseExample" [ngbCollapse]="isCollapsed">
+      <div class="card mb-0">
+        <div class="card-body text-center" *ngIf="altText">
+          No Content is here
+        </div>
+        <div class="card-body" *ngIf="!altText">
+          <p><span>Created By:</span> {{userDetails?.addedBy}}</p>
+          <p><span>Created Date:</span> {{userDetails?.addedDate | date}}</p>
+          <p><span>Modified By:</span> {{userDetails?.modifiedBy}}</p>
+          <p><span>Modified Date:</span>{{userDetails?.modifiedDate | date}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Close</button>
+</div>

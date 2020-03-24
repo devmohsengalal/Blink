@@ -1,0 +1,30 @@
+table{
+   margin-top: 20px; 
+}
+
+.btn-primary{
+    display: block;
+    margin: 25px 5px 15px;
+}
+tr:hover{
+cursor: pointer;
+}
+.hidden{
+    display: none
+}
+.m-checkbox-inline label {
+    margin-left: 20px;
+}
+i.fa.fa-search
+{
+    position: absolute;
+    right: 5%;
+    bottom: 9px;
+}
+.cust-search
+{
+    cursor: pointer;
+}
+:host ::ng-deep .page-count{
+    display: none
+}

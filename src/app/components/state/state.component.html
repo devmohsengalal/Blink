@@ -1,0 +1,83 @@
+<!-- Container-fluid starts -->
+<div class="container-fluid">
+  <div class="page-header">
+    <div class="row">
+      <div class="col-lg-6">
+        <h3>States</h3>
+      </div>
+      <div class="col-lg-6">
+        <ol class="breadcrumb pull-right">
+          <li class="breadcrumb-item"><a [routerLink]="'/dashboard/default'"><i class="fa fa-home"></i></a></li>
+          <li class="breadcrumb-item">States </li>
+
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Container-fluid Ends -->
+<!-- Container-fluid starts -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <form class="form theme-form" [formGroup]="StateForm">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-6">
+                <label class="col-form-label"> State Name</label>
+                <input type="text" class="form-control form-control-sm" formControlName="name" placeholder="State Name">
+                <div *ngIf="!StateForm.get('name').valid && isSubmitted">
+                  <small class="text text-danger" *ngIf="StateForm.get('name').errors['required']">This field is
+                    required.</small>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label class="col-form-label">Country Name</label>
+                <ngx-select-dropdown (change)="selectionChanged($event)" formControlName="countryId" [multiple]="false"
+                  [config]="config" [options]="dropdownOptions"></ngx-select-dropdown>
+                <div *ngIf="!StateForm.get('countryId').valid && isSubmitted">
+                  <small class="text text-danger" *ngIf="StateForm.get('countryId').errors['required']">This field is
+                    required.</small>
+                </div>
+              </div>
+            </div>
+            <div class="input-group">
+              <input type="hidden" class="form-control form-control-sm" formControlName="id" placeholder="id">
+            </div>
+            <button type="button" class="btn btn-primary mr-1 search" (click)="onAdd()" [hidden]="isHidden"
+              *ngIf="AuthService.hasRole(41)">Add</button>
+            <button type="button" class="btn btn-success mr-1 search" (click)="edit()" [hidden]="!isHidden"
+              *ngIf="AuthService.hasRole(42)">Save</button>
+            <div *ngIf="showLoader" class="partialLoader">
+              <app-self-building-square-spinner [animationDuration]="1000" [size]="60" [color]="'#fac31e '">
+              </app-self-building-square-spinner>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <input type='text' class="filter-ngx" placeholder='Type to filter the State' (keyup)='updateFilter($event)' />
+          <input type='text' class="filter-ngx" placeholder='Type to filter the Country'
+            (keyup)='updateFilter2($event)' />
+          <ngx-datatable #table class='bootstrap' [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
+            [rowHeight]="'auto'" [limit]="10" [rows]='rows'>
+            <ngx-datatable-column prop="name" name="State Name"></ngx-datatable-column>
+            <ngx-datatable-column prop="countryName" name="Country Name"></ngx-datatable-column>
+            <!-- Edit -->
+            <ngx-datatable-column rop="edit" name='Edit' [width]="80" [sortable]="false" [canAutoResize]="false"
+              [draggable]="false" [resizeable]="false" *ngIf="AuthService.hasRole(42)">
+              <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                <!-- Pencil icon -->
+                <button type="button" class="btn btn-warning edit" (click)="onEdit(row)">
+                  <i class="fa fa-pencil" title="Modify"></i>
+                </button>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

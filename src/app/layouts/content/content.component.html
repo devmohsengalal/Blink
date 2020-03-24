@@ -1,0 +1,16 @@
+<!--page-wrapper Start-->
+<div class="page-wrapper">
+	<app-header></app-header>
+	<!--Page Body Start-->
+    <div class="page-body-wrapper">
+    	<div class="page-sidebar custom-scrollbar">
+           <app-sidebar></app-sidebar>
+        </div>
+    	<div class="page-body">
+    	   <router-outlet></router-outlet>
+        </div>
+    </div>
+    <!--Page Body End-->
+    <app-chat-sidebar></app-chat-sidebar>
+</div>
+<!--page-wrapper End-->

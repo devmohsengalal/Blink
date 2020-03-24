@@ -1,0 +1,97 @@
+<div class="container-fluid">
+  <div class="page-header">
+    <div class="row">
+      <div class="col-lg-6">
+        <h3>List Notification</h3>
+      </div>
+      <div class="col-lg-6">
+        <ol class="breadcrumb pull-right">
+          <li class="breadcrumb-item"><a [routerLink]="'/dashboard/default'"><i class="fa fa-home"></i></a></li>
+          <li class="breadcrumb-item">List Notification </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <form class="form theme-form" [formGroup]="notiForm">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-6" [ngClass]="{'hidden':custHidden}">
+                <label class="col-form-label">Customers</label>
+                <input type="text" class="form-control form-control-sm cust-search" (click)="open()"
+                  formControlName="customerId" [value]="customerName" placeholder="Customer">
+                <i class="fa fa-search"></i>
+              </div>
+              <div class="col-sm-6">
+                <label class="col-form-label">EndUser</label>
+                <ngx-select-dropdown (change)="selectionChangedUser($event)" formControlName="endUserId"
+                  [multiple]="false" [config]="config2" [options]="dropdownOptions2"></ngx-select-dropdown>
+              </div>
+              <div class="col-sm-6">
+                <label class=" col-form-label">Phone</label>
+                <input type="text" appPhoneNum class="form-control form-control-sm" placeholder="ex: +20100000XXXX"
+                  formControlName="phone">
+              </div>
+              <div class="col-sm-6">
+                <label class="col-form-label">Start Date</label>
+                <div class="input-group">
+                  <input class="form-control form-control-sm" placeholder="Choose Start Date" name="dp1" ngbDatepicker
+                    #d="ngbDatepicker" (click)="d.open()" formControlName="sendDateFrom">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label class="col-form-label">End Date</label>
+                <div class="input-group">
+                  <input class="form-control form-control-sm" placeholder="Choose End Date" name="dp2" ngbDatepicker
+                    #d1="ngbDatepicker" (click)="d1.open()" formControlName="sendDateTo">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button"></button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label class="col-form-label">Maximum Rows</label>
+                <select formControlName="maximum" class="form-control form-control-sm cust-search">
+                  <option value="10">10</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary" (click)="search()">Search</button>
+          </div>
+          <div *ngIf="showLoader" class="partialLoader">
+            <app-self-building-square-spinner [animationDuration]="1000" [size]="60" [color]="'#fac31e '">
+            </app-self-building-square-spinner>
+          </div>
+        </form>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <input type='text' class="filter-ngx" placeholder='Type to filter the name' (keyup)='updateFilter($event)' />
+          <ngx-datatable #table class='bootstrap' [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
+            [rowHeight]="'auto'" [rows]='rows'>
+            <ngx-datatable-column prop="endUser.customer.name" name="Customer Name"></ngx-datatable-column>
+            <ngx-datatable-column prop="endUser.name" name="Name"></ngx-datatable-column>
+            <ngx-datatable-column prop="endUser.phone" name="Phone"></ngx-datatable-column>
+            <ngx-datatable-column prop="title" name="Title"></ngx-datatable-column>
+            <ngx-datatable-column prop="sendDate" name="Send Date">
+              <ng-template let-value="value" ngx-datatable-cell-template>
+                {{value | date:"dd/MM/yyyy HH:mm:ss": "ar-EG"}}
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+          <ngb-pagination [collectionSize]="pageCount*10" (pageChange)="pageChanged($event)" [maxSize]="5"
+            [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

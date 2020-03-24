@@ -1,0 +1,31 @@
+<div class="modal-header">
+  <h4 class="modal-title">Customer Details</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="card">
+    <div class="card-header b-l-primary border-5">
+      <h5>{{tripSearch.endUser?.name}}</h5>
+    </div>
+    <div class="card-body text-center" *ngIf="altText">
+      No Content is here
+    </div>
+    <div class="card-body" *ngIf="!altText">
+      <p><span>Name:</span> {{tripSearch.endUser?.name}}</p>
+      <p><span>Start Latitude:</span> {{tripSearch?.startLat}}</p>
+      <p><span>Start Longitude:</span> {{tripSearch?.startLong}}</p>
+      <p><span>isEnded:</span> {{tripSearch?.isEnded}}</p>
+      <p><span>End Latitude:</span> {{tripSearch?.endLat}}</p>
+      <p><span>End Longitude:</span> {{tripSearch?.endLong}}</p>
+      <p><span>Start Date:</span> {{tripSearch?.startTime | date}}</p>
+      <p><span>Start Time:</span> {{tripSearch?.startTime | date:'shortTime'}}</p>
+      <p><span>End Date:</span> {{tripSearch?.endTime | date}} </p>
+      <p><span>End Time:</span> {{tripSearch?.endTime | date:'shortTime'}}</p>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Close</button>
+</div>

@@ -1,0 +1,111 @@
+<div class="modal-header">
+  <h4 class="modal-title">List Customers</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="card">
+    <form [formGroup]="customerForm">
+      <div class="card-body">
+
+        <div class="row">
+          <div class="col-sm-6">
+            <label class="col-form-label">Contact Name</label>
+            <input type="text" class="form-control form-control-sm" formControlName="contactName"
+              placeholder="Name">
+          </div>
+          <div class="col-sm-6">
+            <label class="col-form-label">Contact Phone</label>
+            <input type="text" appPhoneNum class="form-control form-control-sm" formControlName="contactPhone"
+              placeholder="contactPhone">
+          </div>
+          <div class="col-sm-6">
+            <label class="col-form-label">Contact Email</label>
+            <input type="email" class="form-control form-control-sm" formControlName="email"
+              placeholder="contactEmail">
+          </div>
+          <div class="col-sm-6">
+            <label class="col-form-label">Name</label>
+            <input type="text" class="form-control form-control-sm" formControlName="name" placeholder="name">
+          </div>
+          <div class="col-sm-6">
+            <label class="col-form-label">State</label>
+            <ngx-select-dropdown (change)="selectionChangedState($event)" formControlName="stateId"
+              [multiple]="false" [config]="config" [options]="dropdownOptions"></ngx-select-dropdown>
+          </div>
+          <div class="col-sm-6">
+            <label class="col-form-label">Phone</label>
+            <input type="text" appPhoneNum class="form-control form-control-sm" formControlName="phone" placeholder="phone">
+          </div>
+          <div class="col-sm-6">
+            <label class="col-form-label">Email</label>
+            <input type="email" class="form-control form-control-sm" formControlName="email" placeholder="email">
+          </div>
+          <div class="col-sm-6">
+            <label class="col-form-label">Subscription Type</label>
+            <ngx-select-dropdown (change)="selectionChanged($event)" formControlName="subscriptionTypeId"
+              [multiple]="false" [config]="config2" [options]="dropdownOptions2">
+            </ngx-select-dropdown>
+          </div>
+          <div class="col-sm-6">
+            <label class="col-form-label">Status</label>
+            <ngx-select-dropdown (change)="selectionChangedStatus($event)" formControlName="isActive"
+              [multiple]="false" [config]="config4" [options]="dropdownOptions4"></ngx-select-dropdown>
+          </div>
+          <div class="col-sm-6">
+            <label class="col-form-label">Maximum Rows</label>
+          <select formControlName="maximum" class="form-control form-control-sm cust-search">
+            <option value="10">10</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+        </div>
+          <div class="col-sm-6">
+
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-sm-9">
+            <input type="hidden" class="form-control form-control-sm" formControlName="type" placeholder="">
+          </div>
+        </div>
+        <button type="button" class="btn btn-primary mr-1" (click)="search()"
+          *ngIf="AuthService.hasRole(16)">Search</button>
+
+        <div *ngIf="showLoader" class="partialLoader">
+          <app-self-building-square-spinner [animationDuration]="1000" [size]="60" [color]="'#fac31e'">
+          </app-self-building-square-spinner>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <input type='text' class="filter-ngx" placeholder='Type to filter the name'
+        (keyup)='updateFilter($event)' />
+      <ngx-datatable #table class='bootstrap' [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
+        [rowHeight]="'auto'" [rows]='rows'>
+        <ngx-datatable-column prop="contactName" name="Contact Name"></ngx-datatable-column>
+        <ngx-datatable-column prop="name" name="Name"></ngx-datatable-column>
+        <ngx-datatable-column prop="isActive" name="Status"></ngx-datatable-column>
+
+        <!-- Edit -->
+        <ngx-datatable-column name='Select' [width]="60" [sortable]="true" [canAutoResize]="true" [draggable]="false"
+          [resizeable]="true">
+          <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+            <!-- Pencil icon -->
+            <button type="button" class="btn btn-primary edit" (click)="selectCustomer(row)">
+              <i class="fa fa-share-square-o" title="Modify"></i>
+            </button>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+      <ngb-pagination [collectionSize]="pageCount*10" (pageChange)="pageChanged($event)" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Close</button>
+</div>

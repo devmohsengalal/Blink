@@ -1,0 +1,176 @@
+<!-- Container-fluid starts -->
+<div class="container-fluid">
+  <div class="page-header">
+    <div class="row">
+      <div class="col-lg-6">
+        <h3>Accounts</h3>
+      </div>
+      <div class="col-lg-6">
+        <ol class="breadcrumb pull-right">
+          <li class="breadcrumb-item"><a [routerLink]="'/dashboard/default'"><i class="fa fa-home"></i></a></li>
+          <li class="breadcrumb-item">Accounts</li>
+          <li class="breadcrumb-item">{{addEdit}} Account</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Container-fluid Ends -->
+<!-- Container-fluid starts -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <form class="form theme-form" [formGroup]="accForm">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="row">
+                  <div class="col-sm-12" [ngClass]="{'hidden':custHidden}">
+                    <label class="col-form-label">Customers</label>
+                    <input type="text" class="form-control form-control-sm cust-search" (click)="open()"
+                      formControlName="customerId" [value]="customerName" placeholder="Customer">
+                    <i class="fa fa-search"></i>
+                    <div *ngIf="!accForm.get('customerId').valid && isSubmitted"><span class="err">*</span>
+                      <small class="text text-danger" *ngIf="accForm.get('customerId').errors['required']">This field is
+                        required.</small>
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <label class="col-form-label">Full Name</label>
+                    <input type="text" class="form-control form-control-sm" formControlName="fullName"
+                      placeholder="Full Name">
+                    <div *ngIf="!accForm.get('fullName').valid && isSubmitted"><span class="err">*</span>
+                      <small class="text text-danger" *ngIf="accForm.get('fullName').errors['required']">This field is
+                        required.</small>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-12">
+                    <div class="row">
+                      <div class="col-sm-6" style="padding-right: 0;">
+                        <label class="col-form-label">Username</label>
+                        <input type="text" class="form-control form-control-sm" formControlName="userName"
+                        [readOnly]="selected"
+                          placeholder="Username">
+                        <div *ngIf="!accForm.get('userName').valid && isSubmitted"><span class="err">*</span>
+                          <small class="text text-danger" *ngIf="!!accForm.get('userName').errors?.required">This field is
+                            required.</small>
+                          <small class="text text-danger" *ngIf="accForm.get('userName').errors['pattern']">
+                            No spaces or special characters Allowed.
+                          </small>
+                        </div>
+                      </div>
+                      <div class="col-sm-6" style="padding-left: 0;">
+                          <label class="col-form-label">&nbsp;</label>
+                          <input type="text" class="form-control form-control-sm" readonly formControlName="custName">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="row text-center">
+                  <div class="col-sm-12">
+                    <img style="width:200px;height:170px"
+                      [src]='accImage!= null ? "data:image/png;base64,"+ accImage : myImgUrl'
+                      class="rounded img-responsive">
+                  </div>
+                  <div class="col-sm-12">
+                    <label class="btn btn-info uploads" for="file">Upload Your Image</label>
+                    <input type="file" id="file" class="files" accept="image/*" (change)="AccountImageListener($event)">
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label class="col-form-label">Email</label>
+                <input type="email" class="form-control form-control-sm" formControlName="email" placeholder="Email">
+                <div *ngIf="!accForm.get('email').valid && isSubmitted"><span class="err">*</span>
+                  <small class="text text-danger" *ngIf="accForm.get('email').errors['required']">This field is
+                    required.</small>
+                  <small class="text text-danger" *ngIf="accForm.get('email').errors['email']">Not Valid email</small>
+                </div>
+              </div>
+              <div class="col-sm-6" [hidden]="selected">
+                <label class="col-form-label">Password</label>
+                <input type="password" class="form-control form-control-sm" [autocomplete]="'new-password'"
+                  formControlName="password" placeholder="Password">
+                <div *ngIf="!accForm.get('password').valid && isSubmitted"><span class="err">*</span>
+                  <small class="text text-danger requrired" *ngIf="accForm.get('password').errors['required']">This
+                    field is
+                    required.</small>
+                  <small class="text text-danger" *ngIf="accForm.get('password').errors['maxlength']">Maximum required
+                    number is 8.</small>
+                  <small class="text text-danger" *ngIf="accForm.get('password').errors['minlength']"> Minimum required
+                    number is 4.</small>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label class="col-form-label">Country</label>
+                <ngx-select-dropdown (change)="selectionChangedCountry($event)" [multiple]="false" [config]="config4"
+                  [options]="dropdownOptions4" formControlName="countryId"></ngx-select-dropdown>
+                <div *ngIf="!accForm.get('stateId').valid && isSubmitted"><span class="err">*</span>
+                  <small class="text text-danger" *ngIf="accForm.get('stateId').errors['required']">This field is
+                    required.</small>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label class="col-form-label">Role</label>
+                <ngx-select-dropdown (change)="selectionChangedRole($event)" formControlName="roleId" [multiple]="false"
+                  [config]="config" [options]="dropdownOptions"></ngx-select-dropdown>
+                <div *ngIf="!accForm.get('roleId').valid && isSubmitted"><span class="err">*</span>
+                  <small class="text text-danger" *ngIf="accForm.get('roleId').errors['required']">This field is
+                    required.</small>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label class="col-form-label">State</label>
+                <ngx-select-dropdown (change)="selectionChangedState($event)" formControlName="stateId"
+                  [multiple]="false" [disabled]="isCountry" [config]="config3" [options]="dropdownOptions3">
+                </ngx-select-dropdown>
+                <div *ngIf="!accForm.get('stateId').valid && isSubmitted"><span class="err">*</span>
+                  <small class="text text-danger" *ngIf="accForm.get('stateId').errors['required']">This field is
+                    required.</small>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label class="col-form-label">Phone Number</label>
+                <input type="text" appPhoneNum class="form-control form-control-sm" formControlName="phoneNumber"
+                  placeholder="ex: +20100000XXXX">
+                <div *ngIf="!accForm.get('phoneNumber').valid && isSubmitted"><span class="err">*</span>
+                  <small class="text text-danger" *ngIf="accForm.get('phoneNumber').errors['required']">This field is
+                    required.</small>
+                  <small class="text text-danger" *ngIf="accForm.get('phoneNumber').errors['pattern']">Insert only
+                    + and Numbers</small>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group m-t-15 m-checkbox-inline mb-0">
+                  <div class="checkbox checkbox-dark">
+                    <input type="checkbox" id="isActive" formControlName="isActive">
+                    <label for="isActive" *ngIf="AuthService.hasRole(25)">Is Active</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-sm-9">
+                <input type="hidden" class="form-control form-control-sm" formControlName="id">
+              </div>
+            </div>
+            <div [ngClass]="{'hidden':selected}">
+              <button type="button" class="btn btn-primary mr-1" (click)="add()">Add Account</button>
+            </div>
+            <button type="button" class="btn btn-primary mr-1" (click)="edit()" [ngClass]="{'hidden':!selected}">Save
+              Changes</button>
+
+            <div *ngIf="showLoader" class="partialLoader">
+              <app-self-building-square-spinner [animationDuration]="1000" [size]="60" [color]="'#fac31e '">
+              </app-self-building-square-spinner>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,79 @@
+<!--Page Sidebar Start-->
+<div class="sidebar-user text-center">
+    <div>
+        <img class="img-50 rounded-circle" src="assets/images/user/1.jpg" alt="#">
+    </div>
+    <h6 class="mt-3 f-12">{{username}}</h6>
+</div>
+<ul class="sidebar-menu">
+    <!-- 1st level Menu -->
+    <li *ngFor="let menuItem of menuItems">
+        <div class="sidebar-title" *ngIf="menuItem.headTitle ">
+            {{menuItem.headTitle}}
+            <span class="badge badge-{{menuItem.badgeType}} pull-right" *ngIf="menuItem.badgeType">{{menuItem.badgeValue}}</span>
+        </div>
+        <!-- Sub -->
+        <a href="javascript:void(0)" class="sidebar-header" *ngIf="menuItem['type'] === 'sub' && AuthService.hasModule(menuItem.role)">
+            <i [class]="menuItem.icon"></i><span>{{menuItem.title}} <span class="badge badge-{{menuItem.badgeType}} ml-3" *ngIf="menuItem.badgeType">{{menuItem.badgeValue}}</span></span>
+            <i class="fa fa-angle-right pull-right" *ngIf="menuItem.children"></i>
+        </a>
+        <!-- Link -->
+        <a [routerLink]="!menuItem.type ? null : [menuItem.path]" routerLinkActive="active" class="sidebar-header" *ngIf="menuItem['type'] === 'link' && AuthService.hasRole(menuItem.role)">
+            <i [class]="menuItem.icon"></i><span>{{menuItem.title}} <span class="badge badge-{{menuItem.badgeType}} ml-3" *ngIf="menuItem.badgeType">{{menuItem.badgeValue}}</span></span>
+            <i class="fa fa-angle-right pull-right" *ngIf="menuItem.children"></i>
+        </a>
+        <!-- External Link -->
+        <a href="{{ !menuItem.type ? null : menuItem.path }}" class="sidebar-header" *ngIf="menuItem['type'] === 'extLink' && AuthService.hasRole(menuItem.role)">
+            <i [class]="menuItem.icon"></i><span>{{menuItem.title}} <span class="badge badge-{{menuItem.badgeType}} ml-3" *ngIf="menuItem.badgeType">{{menuItem.badgeValue}}</span></span>
+            <i class="fa fa-angle-right pull-right" *ngIf="menuItem.children"></i>
+        </a>
+        <!-- External Tab Link -->
+        <a href="{{ !menuItem.type ? null : menuItem.path }}" target="_blank" class="sidebar-header" *ngIf="menuItem['type'] === 'extTabLink' && AuthService.hasRole(menuItem.role)">
+            <i [class]="menuItem.icon"></i><span>{{menuItem.title}} <span class="badge badge-{{menuItem.badgeType}} ml-3" *ngIf="menuItem.badgeType">{{menuItem.badgeValue}}</span></span>
+            <i class="fa fa-angle-right pull-right" *ngIf="menuItem.children"></i>
+        </a>
+        <!-- 2nd Level Menu -->
+        <ul class="sidebar-submenu" *ngIf="menuItem.children">
+            <li *ngFor="let childrenItem of menuItem.children">
+                <!-- Sub -->
+                <a href="javascript:void(0)" *ngIf="childrenItem.type === 'sub' && AuthService.hasRole(childrenItem.role)">
+                  <i class="fa fa-angle-right"></i>{{childrenItem.title}} <span class="badge badge-{{childrenItem.badgeType}} pull-right" *ngIf="childrenItem.badgeType">{{childrenItem.badgeValue}}</span>
+                  <i class="fa fa-angle-right pull-right" *ngIf="childrenItem.children"></i>
+                </a>
+                <!-- Link -->
+                <a [routerLink]="!childrenItem.type ? null : [childrenItem.path]" *ngIf="childrenItem.type === 'link' && AuthService.hasRole(childrenItem.role)" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                  <i class="fa fa-angle-right"></i>{{childrenItem.title}} <span class="badge badge-{{childrenItem.badgeType}} pull-right" *ngIf="childrenItem.badgeType">{{childrenItem.badgeValue}}</span>
+                  <i class="fa fa-angle-right pull-right" *ngIf="childrenItem.children"></i>
+                </a>
+                <!-- External Link -->
+                <a href="{{ !childrenItem.type ? null : childrenItem.path }}" *ngIf="childrenItem.type === 'extLink' && AuthService.hasRole(childrenItem.role)" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                  <i class="fa fa-angle-right"></i>{{childrenItem.title}} <span class="badge badge-{{childrenItem.badgeType}} pull-right" *ngIf="childrenItem.badgeType">{{childrenItem.badgeValue}}</span>
+                  <i class="fa fa-angle-right pull-right" *ngIf="childrenItem.children"></i>
+                </a>
+                <!-- External Tab Link -->
+                <a href="{{ !childrenItem.type ? null : childrenItem.path }}" target="_blank" *ngIf="childrenItem.type === 'extTabLink' && AuthService.hasRole(childrenItem.role)">
+                  <i class="fa fa-angle-right"></i>{{childrenItem.title}} <span class="badge badge-{{childrenItem.badgeType}} pull-right" *ngIf="childrenItem.badgeType">{{childrenItem.badgeValue}}</span>
+                  <i class="fa fa-angle-right pull-right" *ngIf="childrenItem.children"></i>
+                </a>
+                <!-- 3rd Level Menu -->
+                <ul class="sidebar-submenu" *ngIf="childrenItem.children  && AuthService.hasRole(childrenItem.role)">
+                    <li *ngFor="let childrenSubItem of childrenItem.children">
+                        <!-- Link -->
+                        <a [routerLink]="!childrenSubItem.type ? null : [childrenSubItem.path]" *ngIf="childrenSubItem.type === 'link' && AuthService.hasRole(childrenSubItem.role)" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                            <i class="fa fa-angle-right"></i>{{childrenSubItem.title}} <span class="badge badge-{{childrenSubItem.badgeType}} pull-right" *ngIf="childrenSubItem.badgeType">{{childrenSubItem.badgeValue}}</span>
+                        </a>
+                        <!-- External Link -->
+                        <a href="{{ !childrenSubItem.type ? null : childrenSubItem.path }}" *ngIf="childrenSubItem.type === 'extLink' && AuthService.hasRole(childrenSubItem.role)" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                            <i class="fa fa-angle-right"></i>{{childrenSubItem.title}} <span class="badge badge-{{childrenSubItem.badgeType}} pull-right" *ngIf="childrenSubItem.badgeType">{{childrenSubItem.badgeValue}}</span>
+                        </a>
+                        <!-- External Tab Link -->
+                        <a href="{{ !childrenSubItem.type ? null : childrenSubItem.path }}" target="_blank" *ngIf="childrenSubItem.type === 'extTabLink' && AuthService.hasRole(childrenSubItem.role)">
+                            <i class="fa fa-angle-right"></i>{{childrenSubItem.title}} <span class="badge badge-{{childrenSubItem.badgeType}} pull-right" *ngIf="childrenSubItem.badgeType">{{childrenSubItem.badgeValue}}</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+</ul> 
+

@@ -1,0 +1,29 @@
+table td,
+table th {
+  text-align: center;
+  padding: 7px
+}
+
+.hidden {
+  display: none
+}
+
+.m-checkbox-inline label {
+  margin-left: 20px;
+}
+
+.files {
+  visibility: hidden;
+  height: 0;
+  position: absolute;
+  bottom: 0;
+}
+
+.btn-info {
+  display: block;
+  margin: 15px auto;
+  width: 185px
+}
+.input-group-text{
+  padding: 3px 10px
+}

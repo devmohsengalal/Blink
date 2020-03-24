@@ -1,0 +1,34 @@
+<div class="modal-header">
+  <h4 class="modal-title">Incident Details</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="card">
+    <div class="card-header b-l-primary border-5">
+      <h5>{{incidentDetails.endUser?.name}}</h5>
+    </div>
+    <div class="card-body text-center" *ngIf="altText">
+      No Content is here
+    </div>
+    <div class="card-body" *ngIf="!altText">
+      <p><span>Name:</span> {{incidentDetails.endUser?.name}}</p>
+      <p><span>Phone:</span> {{incidentDetails.endUser?.phone}}</p>
+      <p><span>Latitude:</span> {{incidentDetails?.latitude}}</p>
+      <p><span>Longitude:</span> {{incidentDetails?.longitude}}</p>
+      <p><span>Date:</span> {{incidentDetails?.date | date}}</p>
+      <p><span>Time:</span> {{incidentDetails?.date | date:'shortTime'}}</p>
+      <p><span>Severity:</span> {{incidentDetails?.severity}}</p>
+      <p><span>Cell Towe Info:</span> {{incidentDetails?.cellTowerInfo?.mcc}} -
+        {{incidentDetails?.cellTowerInfo?.mnc}}</p>
+      <p><span>Cell Lac:</span> {{incidentDetails?.cellTowerInfo?.cellLac}}</p>
+      <p><span>Cell Date:</span> {{incidentDetails?.cellTowerInfo?.date}}</p>
+      <p><span>Reported By:</span> {{incidentDetails?.reportedBy}}</p>
+      <p><span>Reported By:</span> {{incidentDetails?.incidentType?.name}}</p>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Close</button>
+</div>

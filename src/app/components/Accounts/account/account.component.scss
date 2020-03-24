@@ -1,0 +1,22 @@
+.btn-primary {
+  margin: 20px 20px 30px;
+  display: inline-block
+}
+
+table td,
+table th {
+  text-align: center;
+  padding: 7px
+}
+
+.hidden {
+  display: none
+}
+
+.m-checkbox-inline label {
+  margin-left: 20px;
+}
+
+:host ::ng-deep .page-count {
+  display: none
+}

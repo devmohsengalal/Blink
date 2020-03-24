@@ -1,0 +1,113 @@
+<!-- Container-fluid starts -->
+<div class="container-fluid">
+  <div class="page-header">
+    <div class="row">
+      <div class="col-lg-6">
+        <h3>Vehicles
+          <small>Search</small>
+        </h3>
+      </div>
+      <div class="col-lg-6">
+        <ol class="breadcrumb pull-right">
+          <li class="breadcrumb-item"><a [routerLink]="'/dashboard/default'"><i class="fa fa-home"></i></a></li>
+          <li class="breadcrumb-item">Vehicles </li>
+          <li class="breadcrumb-item active">List Vehicles</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Container-fluid Ends -->
+<!-- Container-fluid starts -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <form class="form theme-form" [formGroup]="vehicleForm">
+          <div class="card-body">
+            <div class="row">
+              <div class="input-group">
+                <input type="hidden" class="form-control form-control-sm" formControlName="id" placeholder="id">
+              </div>
+              <div class="col-sm-6">
+                <label class="col-form-label">Vehicle Type </label>
+                <input type="text" class="form-control form-control-sm" formControlName="type"
+                  placeholder="Vehicle Type">
+              </div>
+              <div class="col-sm-6">
+                <label class="col-form-label">Vehicle Model </label>
+                <input type="text" class="form-control form-control-sm" formControlName="model"
+                  placeholder="Vehicle Model">
+              </div>
+              <div class="col-sm-6">
+                <label class="col-form-label">Vehicle Color </label>
+                <input type="text" class="form-control form-control-sm" formControlName="color"
+                  placeholder="Vehicle Color">
+              </div>
+              <div class="col-sm-6" [ngClass]="{'hidden':custHidden}">
+                <label class="col-form-label">Customers</label>
+                <input type="text" class="form-control form-control-sm cust-search" (click)="open()"
+                  formControlName="customerId" [value]="customerName" placeholder="Customer">
+                <i class="fa fa-search"></i>
+              </div>
+              <div class="col-sm-6">
+                <label class="col-form-label">Maximum Rows</label>
+                <select formControlName="maximum" class="form-control form-control-sm cust-search">
+                  <option value="10">10</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary mr-1 search" (click)="listVehicle()"
+              *ngIf="AuthService.hasRole(34)">Search</button>
+          </div>
+        </form>
+      </div>
+      <div *ngIf="showLoader" class="partialLoader">
+        <app-self-building-square-spinner [animationDuration]="1000" [size]="60" [color]="'#fac31e '">
+        </app-self-building-square-spinner>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <input type='text' class="filter-ngx" placeholder='Type to filter the name' (keyup)='updateFilter($event)' />
+          <ngx-datatable #table class='bootstrap' [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
+            [rowHeight]="'auto'" [limit]="10" [rows]='rows'>
+
+            <ngx-datatable-column prop="type" name="Type"></ngx-datatable-column>
+            <ngx-datatable-column prop="model" name="Model"></ngx-datatable-column>
+            <ngx-datatable-column prop="color" name="Color"></ngx-datatable-column>
+            <ngx-datatable-column prop="description" name="Description"></ngx-datatable-column>
+            <ngx-datatable-column prop="actionBy" name="Action By"></ngx-datatable-column>
+            <ngx-datatable-column prop="edit" name='Edit' [width]="80" [sortable]="false" [canAutoResize]="false"
+              [draggable]="false" [resizeable]="false" *ngIf="AuthService.hasRole(32)">
+              <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                <button type="button" class="btn btn-warning edit" (click)="onEdit(row)">
+                  <i class="fa fa-pencil" title="Modify"></i>
+                </button>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="delete" name='Delete' [width]="80" [sortable]="false" [canAutoResize]="false"
+              [draggable]="false" [resizeable]="false" *ngIf="AuthService.hasRole(33)">
+              <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                <button type="button" class="btn btn-danger edit" (click)="delete(row,rowIndex)">
+                  <i class="fa fa-trash-o" title="Delete"></i>
+                </button>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name='Details' [width]="60" [sortable]="false" [canAutoResize]="false"
+              [draggable]="false" [resizeable]="false">
+              <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                <button type="button" class="btn btn-info edit" (click)="gotToDetails(row)">
+                  <i class="fa fa-eye" title="Details"></i>
+                </button>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+          <ngb-pagination [collectionSize]="pageCount*10" (pageChange)="pageChanged($event)" [maxSize]="5"
+            [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

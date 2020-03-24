@@ -1,0 +1,258 @@
+<!-- Container-fluid starts -->
+<div class="container-fluid">
+  <div class="page-header">
+    <div class="row">
+      <div class="col-lg-6">
+        <h3>Customer</h3>
+      </div>
+      <div class="col-lg-6">
+        <ol class="breadcrumb pull-right">
+          <li class="breadcrumb-item"><a [routerLink]="'/dashboard/default'"><i class="fa fa-home"></i></a></li>
+          <li class="breadcrumb-item active">{{addEdit}} Customer</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Container-fluid Ends -->
+
+<!-- Container-fluid starts -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <form [formGroup]="customerForm">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <label class="col-form-label">Contact Name</label>
+                    <input type="text" class="form-control form-control-sm" formControlName="contactName"
+                      placeholder="contact Name">
+                    <div *ngIf="!customerForm.get('contactName').valid && isSubmitted"><span class="err">*</span>
+                      <small class="text text-danger" *ngIf="customerForm.get('contactName').errors['required']">This
+                        field is
+                        required.</small>
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <label class="col-form-label">Contact Phone</label>
+                    <input type="text" appPhoneNum class="form-control form-control-sm" formControlName="contactPhone"
+                      placeholder="ex: +20100000XXXX">
+                    <div *ngIf="!customerForm.get('contactPhone').valid && isSubmitted"><span class="err">*</span>
+                      <small class="text text-danger" *ngIf="customerForm.get('contactPhone').errors['required']">This
+                        field is
+                        required.</small>
+                      <small class="text text-danger" *ngIf="customerForm.get('contactPhone').errors['pattern']">Insert
+                        only + Numbers</small>
+                      <small class="text text-danger" *ngIf="customerForm.get('contactPhone').errors['minlength']">
+                        contactPhone should contain at least 11 digits.
+                      </small>
+                      <small class="text text-danger" *ngIf="customerForm.get('contactPhone').errors['maxlength']">
+                        contactPhone should not exceed the limit of 14 digits.
+                      </small>
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <label class="col-form-label">Contact Email</label>
+                    <input type="email" class="form-control form-control-sm" formControlName="contactEmail"
+                      placeholder="Contact Email">
+                    <div *ngIf="!customerForm.get('contactEmail').valid && isSubmitted"><span class="err">*</span>
+                      <small class="text text-danger" *ngIf="customerForm.get('contactEmail').errors['required']">This
+                        field is
+                        required.</small>
+                      <small class="text text-danger" *ngIf="customerForm.get('contactEmail').errors['email']">Not Valid
+                        email</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="row text-center">
+                  <div class="col-sm-12">
+                    <img style="width:200px;height:170px"
+                      [src]='accImage!= null ? "data:image/png;base64,"+ accImage : myImgUrl'
+                      class="rounded img-responsive">
+                  </div>
+                  <div class="col-sm-12">
+                    <label class="btn btn-info uploads" for="file">Upload Your Image</label>
+                    <input type="file" id="file" class="files" accept="image/*" (change)="AccountImageListener($event)">
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label class="col-form-label">Name</label>
+                <input type="text" class="form-control form-control-sm" formControlName="name" placeholder="name">
+                <div *ngIf="!customerForm.get('name').valid && isSubmitted"><span class="err">*</span>
+                  <small class="text text-danger" *ngIf="customerForm.get('name').errors['required']">This field is
+                    required.</small>
+                    <small class="text text-danger" *ngIf="customerForm.get('name').errors['pattern']">
+                      No spaces or special characters Allowed.
+                    </small>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label class="col-form-label">Title</label>
+                <input type="text" class="form-control form-control-sm" formControlName="title" placeholder="title">
+              </div>
+              <div class="col-sm-6">
+                <label class="col-form-label">Customer Type</label>
+                <select class="form-control form-control-sm" formControlName="customerType">
+                  <option value="null" disabled>Choose Customer Type</option>
+                  <option value="ThirdParty">Third Party</option>
+                  <option value="Customer">Customer</option>
+                </select>
+                <div *ngIf="!customerForm.get('customerType').valid && isSubmitted"><span class="err">*</span>
+                  <small class="text text-danger" *ngIf="customerForm.get('customerType')?.errors['required']">This
+                    field
+                    is
+                    required.</small>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label class="col-form-label">Phone</label>
+                <input type="text" appPhoneNum class="form-control form-control-sm" formControlName="phone" placeholder="ex: +20100000XXXX">
+                <div *ngIf="!customerForm.get('phone').valid && isSubmitted"><span class="err">*</span>
+                  <small class="text text-danger" *ngIf="customerForm.get('phone').errors['required']">This field is
+                    required.</small>
+                  <small class="text text-danger" *ngIf="customerForm.get('phone').errors['pattern']">Insert only +
+                    Numbers</small>
+                  <small class="text text-danger" *ngIf="customerForm.get('phone').errors['minlength']">
+                    phone should contain at least 11 digits.
+                  </small>
+                  <small class="text text-danger" *ngIf="customerForm.get('phone').errors['maxlength']">
+                    phone should not exceed the limit of 14 digits.
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label class="col-form-label">Country</label>
+                <ngx-select-dropdown (change)="selectionChangedCountry($event)" formControlName="countryId" [multiple]="false" [config]="config6"
+                  [options]="dropdownOptions6"></ngx-select-dropdown>
+              </div>
+              <div class="col-sm-6">
+                <label class="col-form-label">State</label>
+                <ngx-select-dropdown (change)="selectionChangedState($event)" formControlName="stateId"
+                  [multiple]="false" [config]="config" [options]="dropdownOptions"></ngx-select-dropdown>
+                <div *ngIf="!customerForm.get('stateId').valid && isSubmitted"><span class="err">*</span>
+                  <small class="text text-danger" *ngIf="customerForm.get('stateId')?.errors['required']">This field
+                    is
+                    required.</small>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label class="col-form-label">Email</label>
+                <input type="email" class="form-control form-control-sm" formControlName="email" placeholder="email">
+                <div *ngIf="!customerForm.get('email').valid && isSubmitted"><span class="err">*</span>
+                  <small class="text text-danger" *ngIf="customerForm.get('email').errors['required']">This field is
+                    required.</small>
+                  <small class="text text-danger" *ngIf="customerForm.get('email').errors['email']">Not Valid
+                    email</small>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label class="col-form-label">Licensed To</label>
+                <ngx-select-dropdown (change)="selectionChangedModule($event)" [multiple]="true" [config]="config4"
+                  [options]="dropdownOptions4" formControlName="permissions"></ngx-select-dropdown>
+                <div *ngIf="!customerForm.get('permissions').valid && isSubmitted"><span class="err">*</span>
+                  <small class="text text-danger" *ngIf="customerForm.get('permissions').errors['required']">This field
+                    is
+                    required.</small>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label class=" col-form-label">Subscription From</label>
+                <div class="input-group">
+                  <input class="form-control form-control-sm" placeholder="Choose Date of Subscription" name="dp1"
+                    ngbDatepicker #d="ngbDatepicker" (click)="addEdit=='Edit'?null:d.open()" formControlName="subscriptionFrom"
+                    [readOnly]="addEdit=='Edit'?true:false">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar" (click)="addEdit=='Edit'?null:d.toggle()"
+                      type="button"></button>
+                  </div>
+                </div>
+                <div *ngIf="!customerForm.get('subscriptionFrom').valid && isSubmitted"><span class="err">*</span>
+                  <small class="text text-danger" *ngIf="customerForm.get('subscriptionFrom').errors['required']">This
+                    field
+                    is
+                    required.</small>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label class="col-form-label">Address</label>
+                <input type="text" class="form-control form-control-sm" formControlName="address" placeholder="address">
+                <div *ngIf="!customerForm.get('address').valid && isSubmitted"><span class="err">*</span>
+                  <small class="text text-danger" *ngIf="customerForm.get('address').errors['required']">This field is
+                    required.</small>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label class="col-form-label">Subscription To</label>
+                <div class="input-group">
+                  <input class="form-control form-control-sm" placeholder="Choose End of Subscription" name="dp2"
+                    ngbDatepicker #d1="ngbDatepicker" [readOnly]="addEdit=='Edit'?true:false"
+                    (click)="addEdit=='Edit'?null:d1.open()" formControlName="subscriptionTo">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar" (click)="addEdit=='Edit'?null:d1.toggle()"
+                      type="button"></button>
+                  </div>
+                </div>
+                <div *ngIf="!customerForm.get('subscriptionTo').valid && isSubmitted"><span class="err">*</span>
+                  <small class="text text-danger" *ngIf="customerForm.get('subscriptionTo')?.errors['required']">This
+                    field
+                    is
+                    required.</small>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label class="col-form-label">Subscription Type</label>
+                <ngx-select-dropdown (change)="selectionChanged($event)" formControlName="subscriptionTypeId"
+                  [multiple]="false" [config]="config2" [options]="dropdownOptions2">
+                </ngx-select-dropdown>
+                <div *ngIf="!customerForm.get('subscriptionTypeId').valid && isSubmitted"><span class="err">*</span>
+                  <small class="text text-danger"
+                    *ngIf="customerForm.get('subscriptionTypeId')?.errors['required']">This field
+                    is
+                    required.</small>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label class="col-form-label">Number Of EndUsers</label>
+                <input type="number" class="form-control form-control-sm" formControlName="noOfEndUsers"
+                  [readOnly]="addEdit=='Edit'?true:false" placeholder="Number Of EndUsers">
+                <div *ngIf="!customerForm.get('noOfEndUsers').valid && isSubmitted"><span class="err">*</span>
+                  <small class="text text-danger" *ngIf="customerForm.get('noOfEndUsers').errors['required']">This field
+                    is required.</small>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group m-t-15 m-checkbox-inline mb-0">
+                  <div class="checkbox checkbox-dark">
+                    <input type="checkbox" id="isActive" formControlName="isActive">
+                    <label for="isActive" *ngIf="AuthService.hasRole(25)">Is Active</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-9">
+              <input type="hidden" class="form-control form-control-sm" formControlName="id">
+            </div>
+            <button type="submit" class="btn btn-primary" (click)="add()" [ngClass]="{'hidden':selected}"
+              *ngIf="AuthService.hasRole(12)">
+              Add Customer</button>
+            <button type="submit" class="btn btn-success" [ngClass]="{'hidden':!selected}" (click)="edit()"
+              *ngIf="AuthService.hasRole(13)">
+              Save Changes</button>
+            <div *ngIf="showLoader" class="partialLoader">
+              <app-self-building-square-spinner [animationDuration]="1000" [size]="60" [color]="'#fac31e '">
+              </app-self-building-square-spinner>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

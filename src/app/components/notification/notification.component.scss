@@ -1,0 +1,29 @@
+.btn-primary {
+  display: block;
+  margin: 25px 5px 15px;
+}
+
+table {
+  margin-top: 20px;
+}
+
+tr:hover {
+  cursor: pointer;
+}
+
+.hidden {
+  display: none
+}
+
+.m-checkbox-inline label {
+  margin-left: 20px;
+}
+
+.btn-info {
+  margin: 0;
+  padding: 0.375rem 20px;
+}
+
+:host ::ng-deep .page-count {
+  display: none
+}

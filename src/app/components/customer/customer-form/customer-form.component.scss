@@ -1,0 +1,20 @@
+.hidden {
+  display: none
+}
+
+.files {
+  visibility: hidden;
+  height: 0;
+  position: absolute;
+  bottom: 0;
+}
+
+.btn-info {
+  display: block;
+  margin: 15px auto;
+  width: 185px
+}
+
+.form-group {
+  margin-top: 30px !important
+}

@@ -1,0 +1,99 @@
+<!-- Container-fluid starts -->
+<div class="container-fluid">
+  <div class="page-header">
+    <div class="row">
+      <div class="col-lg-6">
+        <h3>Countries
+        </h3>
+      </div>
+      <div class="col-lg-6">
+        <ol class="breadcrumb pull-right">
+          <li class="breadcrumb-item"><a [routerLink]="'/dashboard/default'"><i class="fa fa-home"></i></a></li>
+          <li class="breadcrumb-item">Countries </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Container-fluid Ends -->
+<!-- Container-fluid starts -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <form class="form theme-form" [formGroup]="CountryForm">
+          <div class="card-body">
+            <div class="input-group">
+              <input type="hidden" class="form-control form-control-sm" formControlName="id" placeholder="id">
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <label class="col-form-label"> Country Name</label>
+                <input type="text" class="form-control form-control-sm" formControlName="name"
+                  placeholder="Country Name">
+                <div *ngIf="!CountryForm.get('name').valid && isSubmitted">
+                  <small class="text text-danger" *ngIf="CountryForm.get('name').errors['required']">This field is
+                    required.</small>
+                </div>
+              </div>
+
+              <div class="col-sm-6">
+                <label class="col-form-label">Country Code</label>
+                <input type="text" class="form-control form-control-sm" formControlName="code"
+                  placeholder="Country Code">
+                <div *ngIf="!CountryForm.get('code').valid && isSubmitted">
+                  <small class="text text-danger" *ngIf="CountryForm.get('code').errors['required']">This field is
+                    required.</small>
+                </div>
+              </div>
+            
+            
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <label class="col-form-label"> Emergency Number</label>
+                <input type="text" class="form-control form-control-sm" formControlName="emergencyNumber"
+                  placeholder="Emergency Number">
+                <div *ngIf="!CountryForm.get('emergencyNumber').valid && isSubmitted">
+                  <small class="text text-danger" *ngIf="CountryForm.get('emergencyNumber').errors['required']">This field is
+                    required.</small>
+                </div>
+              </div> 
+              </div>
+            <button type="button" class="btn btn-primary mr-1 search" (click)="onAdd()" [hidden]="isHidden"
+              *ngIf="AuthService.hasRole(38)">Add</button>
+            <button type="button" class="btn btn-success mr-1 search" (click)="edit()" [hidden]="!isHidden"
+              *ngIf="AuthService.hasRole(39)">Save</button>
+            <div *ngIf="showLoader" class="partialLoader">
+              <app-self-building-square-spinner [animationDuration]="1000" [size]="60" [color]="'#fac31e '">
+              </app-self-building-square-spinner>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <input type='text' class="filter-ngx" placeholder='Type to filter the Country'
+            (keyup)='updateFilter($event)' />
+          <ngx-datatable #table class='bootstrap' [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
+            [rowHeight]="'auto'" [limit]="10" [rows]='rows'>
+
+            <ngx-datatable-column prop="name" name="Name"></ngx-datatable-column>
+            <ngx-datatable-column prop="code" name="Country Code"></ngx-datatable-column>
+            <ngx-datatable-column prop="emergencyNumber" name="Emergency Number"></ngx-datatable-column>
+            <!-- Edit -->
+            <ngx-datatable-column prop="edit" name='Edit' [width]="80" [sortable]="false" [canAutoResize]="false"
+              [draggable]="false" [resizeable]="false" *ngIf="AuthService.hasRole(39)">
+              <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                <!-- Pencil icon -->
+                <button type="button" class="btn btn-warning edit" (click)="onEdit(row)">
+                  <i class="fa fa-pencil" title="Modify"></i>
+                </button>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

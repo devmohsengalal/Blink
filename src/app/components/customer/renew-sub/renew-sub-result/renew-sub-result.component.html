@@ -1,0 +1,30 @@
+<div class="modal-header">
+  <h4 class="modal-title">Renew Subscription</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="card">
+    <div class="card-header b-l-primary border-5">
+      <h5>Renewed Subscription Details
+      </h5>
+    </div>
+    <div class="card-body">
+      <p><span>Customer:</span> {{subDetails?.result.data.name }}</p>
+      <p><span>Number Of End User:</span> {{subDetails?.form.noOfEndUsers}}</p>
+      <p><span>Subscription From:</span> {{subDetails?.form.subscriptionFrom }}</p>
+      <p><span>Subscription From:</span> {{subDetails?.form.subscriptionTo }}</p>
+
+      <div class="btn-wid ">
+        <p class="wid"><span>Api Key:</span> {{subDetails?.result.data.apiKey}}</p>
+        <button (click)="copyText()" type="button" value=" copy" class="btn cpy-btn" ngbTooltip="Copied Successfully!"
+          triggers="click:blur">Copy</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Close</button>
+</div>

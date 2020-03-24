@@ -1,0 +1,88 @@
+<!-- Container-fluid starts -->
+<div class="container-fluid">
+  <div class="page-header">
+    <div class="row">
+      <div class="col-lg-6">
+        <h3>Vehicles
+          <small>add   </small>
+        </h3>
+      </div>
+      <div class="col-lg-6">
+        <ol class="breadcrumb pull-right">
+          <li class="breadcrumb-item"><a [routerLink]="'/dashboard/default'"><i class="fa fa-home"></i></a></li>
+          <li class="breadcrumb-item">Vehicles </li>
+           <li class="breadcrumb-item">{{addEdit}} Vehicle</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Container-fluid Ends -->
+<!-- Container-fluid starts -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <form class="form theme-form" [formGroup]="vehicleForm">
+          <div class="card-body">
+            <div class="input-group">
+              <input type="hidden" class="form-control form-control-sm" formControlName="id" placeholder="id">
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Vehicle Type </label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control form-control-sm" formControlName="type" placeholder="Vehicle Type">
+
+              <div *ngIf="!vehicleForm.get('type').valid && isSubmitted">
+                    <small class="text text-danger" *ngIf="vehicleForm.get('type').errors['required']">This field is required.</small>
+                  </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Vehicle Model </label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control form-control-sm" formControlName="model" placeholder="Vehicle Model">
+                <div *ngIf="!vehicleForm.get('model').valid && isSubmitted">
+                    <small class="text text-danger" *ngIf="vehicleForm.get('model').errors['required']">This field is required.</small>
+                  </div>
+              </div>
+
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Vehicle Color </label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control form-control-sm" formControlName="color" placeholder="Vehicle Color">
+                <div *ngIf="!vehicleForm.get('color').valid && isSubmitted">
+                    <small class="text text-danger" *ngIf="vehicleForm.get('color').errors['required']">This field is required.</small>
+                  </div>
+              </div>
+            </div>
+            <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Vehicle Description </label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control form-control-sm" formControlName="description" placeholder="Vehicle Description">
+            </div>
+
+        </div>
+             
+            <div class="card-footer">
+              <button type="button" class="btn btn-primary mr-1" (click)="onAdd()" 
+              [hidden]="isHidden" *ngIf="AuthService.hasRole(31)">Add</button>
+              <button type="button" class="btn btn-success mr-1"  (click)="edit()"
+               [hidden]="!isHidden" *ngIf="AuthService.hasRole(32)">Save</button>
+              <!-- <input type="reset" class="btn btn-light" value="Cancel"> -->
+            </div>
+
+            <div *ngIf="showLoader" class="partialLoader">
+              <app-self-building-square-spinner [animationDuration]="1000" [size]="60" [color]="'#fac31e '">
+              </app-self-building-square-spinner>
+            </div>
+          </div>
+
+        </form>
+
+      </div>
+
+      </div>
+  </div>
+</div>

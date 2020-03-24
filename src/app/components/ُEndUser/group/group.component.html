@@ -1,0 +1,85 @@
+<!-- Container-fluid starts -->
+<div class="container-fluid">
+  <div class="page-header">
+    <div class="row">
+      <div class="col-lg-6">
+        <h3>User Group</h3>
+      </div>
+      <div class="col-lg-6">
+        <ol class="breadcrumb pull-right">
+          <li class="breadcrumb-item"><a [routerLink]="'/dashboard/default'"><i class="fa fa-home"></i></a></li>
+          <li class="breadcrumb-item">End User</li>
+          <li class="breadcrumb-item">List Groups</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Container-fluid Ends -->
+
+<!-- Container-fluid starts -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <form [formGroup]="groupForm">
+          <div class="form-group m-form__group">
+            <div class="input-group">
+              <input type="hidden" class="form-control" formControlName="id" placeholder="id">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Group Name</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control form-control-sm" formControlName="name" placeholder="Name">
+              <div *ngIf="!groupForm.get('name').valid && isSubmitted">
+                <small class="text text-danger" *ngIf="groupForm.get('name').errors['required']">This field is
+                  required.</small>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-primary mr-1" (click)="add()" [ngClass]="{'hidden':selected}"
+            *ngIf="AuthService.hasRole(27)">
+            Add Group</button>
+          <button type="button" class="btn btn-primary mr-1" (click)="edit()" [ngClass]="{'hidden':!selected}"
+            *ngIf="AuthService.hasRole(28)">
+            Save Changes</button>
+          <div *ngIf="showLoader" class="partialLoader">
+            <app-self-building-square-spinner [animationDuration]="1000" [size]="60" [color]="'#fac31e '">
+            </app-self-building-square-spinner>
+          </div>
+        </form>
+      </div>
+      <!--list groups-->
+      <div class="card">
+        <div class="card-body">
+          <input type='text' class="filter-ngx" placeholder='Type to filter the Group' (keyup)='updateFilter($event)' />
+          <ngx-datatable #table class='bootstrap' [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
+            [rowHeight]="'auto'" [limit]="10" [rows]='rows'>
+
+            <ngx-datatable-column prop="name"></ngx-datatable-column>
+            <!-- Edit -->
+            <ngx-datatable-column name='Edit' [width]="60" [sortable]="true" [canAutoResize]="true" [draggable]="false"
+              [resizeable]="true" *ngIf="AuthService.hasRole(28)">
+              <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                <!-- Pencil icon -->
+                <button type="button" class="btn btn-warning edit" (click)="onEdit(row)">
+                  <i class="fa fa-pencil" title="Modify"></i>
+                </button>
+              </ng-template>
+            </ngx-datatable-column>
+            <!-- Delete -->
+            <ngx-datatable-column name='Delete' [width]="60" [sortable]="true" [canAutoResize]="true"
+              [draggable]="false" [resizeable]="true" *ngIf="AuthService.hasRole(29)">
+              <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                <button class="btn btn-danger edit" (click)="onDelete(row)">
+                  <i class="fa fa-trash-o" title="Delete"></i>
+                </button>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

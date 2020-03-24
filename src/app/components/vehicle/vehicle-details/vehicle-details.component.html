@@ -1,0 +1,27 @@
+<div class="modal-header">
+  <h4 class="modal-title">End User Details</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="card">
+    <div class="card-header b-l-primary border-5">
+      <h5>{{vehicleDetails?.addedByName}}
+      </h5>
+    </div>
+    <div class="card-body text-center" *ngIf="altText">
+      No Content is here
+    </div>
+    <div class="card-body" *ngIf="!altText">
+      <p><span>Type:</span> {{vehicleDetails?.type}}</p>
+      <p><span>Model:</span> {{vehicleDetails?.model}}</p>
+      <p><span>Description:</span> {{vehicleDetails?.description}}</p>
+      <p><span>Added Date:</span> {{vehicleDetails?.addedDate | date}}</p>
+      <p><span>Modified Date:</span> {{vehicleDetails?.modifiedDate | date}}</p>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Close</button>
+</div>

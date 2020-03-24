@@ -1,0 +1,38 @@
+
+button.search{
+    display: block;
+    margin: 10px 20px 10px 40px;
+}
+table{
+   margin-top: 20px; 
+}
+tr:hover{
+cursor: pointer;
+}
+.hidden{
+    display: none
+}
+.m-checkbox-inline label {
+    margin-left: 20px;
+}
+.btn-info{
+    margin: 0;   
+    padding: 0.375rem 20px;
+}
+.search{
+    display: block;
+    margin: 25px 5px 15px;
+}
+i.fa.fa-search
+{
+    position: absolute;
+    right: 5%;
+    bottom: 28px;
+}
+.cust-search
+{
+    cursor: pointer;
+}
+:host ::ng-deep .page-count{
+    display: none
+}

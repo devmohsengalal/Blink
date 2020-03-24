@@ -1,0 +1,98 @@
+<div class="modal-header">
+  <h4 class="modal-title">Customer Details</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="card">
+    <div class="card-header b-l-primary border-5">
+      <h5>{{customerDetails?.contactName}} <img style="width:150px;height:120px"
+          [src]='customerDetails.logo != null ? "data:image/png;base64,"+ customerDetails.logo : myImgUrl'
+          class="rounded img-responsive"></h5>
+    </div>
+    <div class="card-body text-center" *ngIf="altText">
+      No Content is here
+    </div>
+    <div class="card-body" *ngIf="!altText">
+      <p><span>Contact Name:</span> {{customerDetails?.contactName}}</p>
+      <p><span>Contact Phone:</span> {{customerDetails?.contactPhone}}</p>
+      <p><span>Contact Email:</span> {{customerDetails?.contactEmail}}</p>
+      <p><span>name:</span> {{customerDetails?.name}}</p>
+      <p><span>Phone Number:</span> {{customerDetails?.phone}}</p>
+      <p><span>EmailName:</span> {{customerDetails?.email}}</p>
+      <p><span>Address:</span> {{customerDetails?.address}}</p>
+      <p><span>Subscription Type:</span> {{customerDetails.subscriptionType}}</p>
+      <p><span>Subscription From:</span> {{customerDetails?.subscriptionFrom | date}}</p>
+      <p><span>Subscription To:</span> {{customerDetails?.subscriptionTo | date}}</p>
+      <p><span>isActive:</span> {{customerDetails?.isActive}}</p>
+      <p><span>State:</span> {{customerDetails?.stateName}}</p>
+      <p><span>Number Of EndUsers:</span> {{customerDetails?.noOfEndUsers}}</p>
+      <div class="btn-wid ">
+        <p class="wid"><span>Api Key:</span> {{customerDetails?.apiKey}}</p>
+        <button (click)="copyText()" type="button" value=" copy" class="btn cpy-btn" ngbTooltip="Copied Successfully!"
+          triggers="click:blur">Copy</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="card">
+  <div class="card-header">
+    <h5>Meta Data</h5>
+    <button type="button" class="btn btn-outline-primary expand-btn" (click)="isCollapsed = !isCollapsed"
+      [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+      Toggle
+    </button>
+  </div>
+  <div class="card-body">
+    <div id="collapseExample" [ngbCollapse]="isCollapsed">
+      <div class="card mb-0">
+        <div class="card-body text-center" *ngIf="altText">
+          No Content is here
+        </div>
+        <div class="card-body" *ngIf="!altText">
+          <p><span>Created By:</span> {{customerDetails?.addedByName}}</p>
+          <p><span>Created Date:</span> {{customerDetails?.addedDate | date}}</p>
+          <p><span>Modified By:</span> {{customerDetails?.modifiedByName}}</p>
+          <p><span>Modified Date:</span>{{customerDetails?.modifiedDate | date}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="card">
+  <div class="card-body">
+    <ngx-datatable #table class='bootstrap' [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
+      [rowHeight]="'auto'" [limit]="10" [rows]='rows'>
+      <ngx-datatable-column prop="id" name="Id" [width]="90"></ngx-datatable-column>
+      <ngx-datatable-column prop="isCurrent" name="Is Current"></ngx-datatable-column>
+      <ngx-datatable-column prop="startDate" name="Start Date">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          {{value | date:"dd/MM/yyyy": "ar-EG"}}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column prop="endDate" name="End Date">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          {{value | date:"dd/MM/yyyy": "ar-EG"}}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column prop="addedByName" name="Added By"></ngx-datatable-column>
+      <ngx-datatable-column prop="noOfEndUser" name="No Of Users"></ngx-datatable-column>
+      <ngx-datatable-column prop="modifiedByName" name="Modified By"></ngx-datatable-column>
+      <ngx-datatable-column name='Details' [width]="60" [sortable]="false" [canAutoResize]="false" [draggable]="false"
+        [resizeable]="false">
+        <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+          <!-- Pencil icon -->
+          <button type="button" class="btn btn-info edit" (click)="gotToDetails(row)">
+            <i class="fa fa-eye" title="Details"></i>
+          </button>
+        </ng-template>
+      </ngx-datatable-column>
+
+
+    </ngx-datatable>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Close</button>
+</div>

@@ -1,0 +1,133 @@
+<div class="container-fluid">
+  <div class="page-header">
+    <div class="row">
+      <div class="col-lg-6">
+        <h3>User Management
+        </h3>
+      </div>
+      <div class="col-lg-6">
+        <ol class="breadcrumb pull-right">
+          <li class="breadcrumb-item"><a [routerLink]="'/dashboard/default'"><i class="fa fa-home"></i></a></li>
+          <li class="breadcrumb-item">End User</li>
+          <li class="breadcrumb-item">List End Users</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <form class="form theme-form" [formGroup]="userForm">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-6">
+                <label class=" col-form-label">Name</label>
+                <input type="text" class="form-control form-control-sm" placeholder="name" formControlName="name">
+
+                <div *ngIf="!userForm.get('name').valid && userForm.get('name').touched">
+                  <small class="text text-danger" *ngIf="userForm.get('name').errors['required']">This field is
+                    required.</small>
+                </div>
+              </div>
+              <div class="col-sm-6" [ngClass]="{'hidden':custHidden}">
+                <label class="col-form-label">Customers</label>
+                <input type="text" class="form-control form-control-sm cust-search" (click)="open()"
+                  formControlName="customerId" [value]="customerName" placeholder="Customer">
+                <i class="fa fa-search"></i>
+                <div *ngIf="!userForm.get('customerId').valid && isSubmitted"><span class="err">*</span>
+                  <small class="text text-danger" *ngIf="userForm.get('customerId').errors['required']">This field is
+                    required.</small>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label class=" col-form-label">Email</label>
+                <input type="email" class="form-control form-control-sm" placeholder="email" formControlName="email">
+              </div>
+              <div class="col-sm-6">
+                <label class=" col-form-label">phone</label>
+                <input type="text" class="form-control form-control-sm" placeholder="ex: +20100000XXXX"
+                  formControlName="phone">
+                <div *ngIf="!userForm.get('phone').valid && isSubmitted"><span class="err">*</span>
+                  <small class="text text-danger" *ngIf="userForm.get('phone').errors['pattern']">Insert only
+                    Numbers</small>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label class="col-form-label">group</label>
+                <ngx-select-dropdown (change)="selectionChangedGroup($event)" formControlName="endUseGroupId"
+                  [multiple]="false" [config]="config" [options]="dropdownOptions"></ngx-select-dropdown>
+              </div>
+              <div class="col-sm-6">
+                <label class="col-form-label">Status</label>
+                <ngx-select-dropdown (change)="selectionChangedStatus($event)" formControlName="isActive"
+                  [multiple]="false" [config]="config4" [options]="dropdownOptions4"></ngx-select-dropdown>
+              </div>
+              <div class="col-sm-6">
+                <label class="col-form-label">Maximum Rows</label>
+                <select formControlName="maximum" class="form-control form-control-sm cust-search">
+                  <option value="10">10</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-9">
+                  <input type="hidden" class="form-control form-control-sm" placeholder="endUserId"
+                    formControlName="endUserId">
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary search" (click)="search()"
+              *ngIf="AuthService.hasRole(26)">Search</button>
+            <div *ngIf="showLoader" class="partialLoader">
+              <app-self-building-square-spinner [animationDuration]="1000" [size]="60" [color]="'#fac31e '">
+              </app-self-building-square-spinner>
+            </div>
+          </div>
+    </form>
+  </div>
+</div>
+  </div>
+<div class="card">
+  <div class="card-body">
+    <input type='text' class="filter-ngx" placeholder='Type to filter the name' (keyup)='updateFilter($event)' />
+    <ngx-datatable #table class='bootstrap' [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
+      [rowHeight]="'auto'" [rows]='rows'>
+      <ngx-datatable-column prop="name" name="Name"></ngx-datatable-column>
+      <ngx-datatable-column prop="customer.name" name="Customer"></ngx-datatable-column>
+      <ngx-datatable-column prop="phone" name="Phone"></ngx-datatable-column>
+      <ngx-datatable-column prop="endUserGroupDto.name" name="Group"></ngx-datatable-column>
+      <ngx-datatable-column prop="isActive" name="Is Active"></ngx-datatable-column>
+      <ngx-datatable-column prop="edit" name='Edit' [width]="80" [sortable]="true" [canAutoResize]="true"
+        [draggable]="false" [resizeable]="true" *ngIf="AuthService.hasRole(23)">
+        <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+          <button type="button" class="btn btn-warning edit" (click)="onEdit(row)">
+            <i class="fa fa-pencil" title="Modify"></i>
+          </button>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column prop="delete" name='Delete' [width]="80" [sortable]="true" [canAutoResize]="true"
+        [draggable]="false" [resizeable]="true" *ngIf="AuthService.hasRole(24)">
+        <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+          <button class="btn btn-danger edit" (click)="onDelete(row)">
+            <i class="fa fa-trash-o" title="Delete"></i>
+          </button>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name='Details' [width]="60" [sortable]="false" [canAutoResize]="false" [draggable]="false"
+        [resizeable]="false">
+        <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+          <button type="button" class="btn btn-info edit" (click)="gotToDetails(row)">
+            <i class="fa fa-eye" title="Details"></i>
+          </button>
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+    <ngb-pagination [collectionSize]="pageCount*10" (pageChange)="pageChanged($event)" [maxSize]="5" [rotate]="true"
+      [boundaryLinks]="true"></ngb-pagination>
+  </div>
+</div>
+</div>
+

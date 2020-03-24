@@ -1,0 +1,97 @@
+<div class="container-fluid">
+  <div class="page-header">
+    <div class="row">
+      <div class="col-lg-6">
+        <h3>Renew Subscription</h3>
+      </div>
+      <div class="col-lg-6">
+        <ol class="breadcrumb pull-right">
+          <li class="breadcrumb-item"><a [routerLink]="'/dashboard/default'"><i class="fa fa-home"></i></a></li>
+          <li class="breadcrumb-item">Customer</li>
+          <li class="breadcrumb-item active">Renew Subscription</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Container-fluid Ends -->
+<!-- Container-fluid starts -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <form [formGroup]="renewForm">
+          <div class="card-body">
+            <div class="form-group row" [ngClass]="{'hidden':custHidden}">
+              <label class="col-form-label col-sm-3">Customers</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control form-control-sm cust-search" (click)="open()"
+                  formControlName="customerId" [value]="customerName" placeholder="Customer">
+                <i class="fa fa-search"></i>
+                <div *ngIf="!renewForm.get('customerId').valid && isSubmitted"><span class="err">*</span>
+                  <small class="text text-danger" *ngIf="renewForm.get('customerId').errors['required']">This field is
+                    required.</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Number Of EndUsers</label>
+              <div class="col-sm-9">
+                <div class="input-group">
+                  <input type="number" class="form-control form-control-sm" formControlName="noOfEndUsers"
+                    placeholder="Number Of EndUsers">
+                </div>
+                <div *ngIf="!renewForm.get('noOfEndUsers').valid && isSubmitted"><span class="err">*</span>
+                  <small class="text text-danger" *ngIf="renewForm.get('noOfEndUsers').errors['required']">This field
+                    is required.</small>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Subscription From</label>
+              <div class="col-sm-9">
+                <div class="input-group">
+                  <input class="form-control form-control-sm" placeholder="Choose Date of Subscription" name="dp1"
+                    ngbDatepicker #d="ngbDatepicker" (click)="d.open()" formControlName="subscriptionFrom">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+                  </div>
+                </div>
+                <div *ngIf="!renewForm.get('subscriptionFrom').valid && isSubmitted"><span class="err">*</span>
+                  <small class="text text-danger" *ngIf="renewForm.get('subscriptionFrom').errors['required']">This
+                    field is
+                    required.</small>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Subscription To</label>
+              <div class="col-sm-9">
+                <div class="input-group">
+                  <input class="form-control form-control-sm" placeholder="Choose End of Subscription" name="dp2"
+                    ngbDatepicker #d1="ngbDatepicker" (click)="d1.open()" formControlName="subscriptionTo">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button"></button>
+                  </div>
+                </div>
+                <div *ngIf="!renewForm.get('subscriptionTo').valid && isSubmitted"><span class="err">*</span>
+                  <small class="text text-danger" *ngIf="renewForm.get('subscriptionTo').errors['required']">This field
+                    is
+                    required.</small>
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary" (click)="renewSubscription()"
+              *ngIf="AuthService.hasRole(17)">Renew Subscription</button>
+
+            <div *ngIf="showLoader" class="partialLoader">
+              <app-self-building-square-spinner [animationDuration]="1000" [size]="60" [color]="'#fac31e '">
+              </app-self-building-square-spinner>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

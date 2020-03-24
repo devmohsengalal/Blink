@@ -1,0 +1,98 @@
+<!-- Container-fluid starts -->
+<div class="container-fluid">
+  <div class="page-header">
+    <div class="row">
+      <div class="col-lg-6">
+        <h3>Search Form
+          <small> Roles Search Form</small>
+        </h3>
+      </div>
+      <div class="col-lg-6">
+        <ol class="breadcrumb pull-right">
+          <li class="breadcrumb-item"><a [routerLink]="'/dashboard'"><i class="fa fa-home"></i></a></li>
+          <li class="breadcrumb-item active">Roles</li>
+          <li class="breadcrumb-item active">Search Form</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Container-fluid Ends -->
+<!-- Container-fluid starts -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <form class="theme-form" [formGroup]="RoleSearchForm" (ngSubmit)="onSubmit()">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="rolename">Role Name</label>
+                  <input type="email" class="form-control" formControlName="name" id="RoleName" placeholder="RoleName">
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-square btn-primary mr-1">search</button>
+            <div *ngIf="showLoader" class="partialLoader">
+              <app-self-building-square-spinner [animationDuration]="1000" [size]="60" [color]="'#fac31e '">
+              </app-self-building-square-spinner>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <input type='text' class="filter-ngx" placeholder='Type to filter the name' (keyup)='updateFilter($event)' />
+          <ngx-datatable #table class='bootstrap' [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
+            [rowHeight]="'auto'" [rows]='rows'>
+
+            <ngx-datatable-column prop="name" name="Name"></ngx-datatable-column>
+            <ngx-datatable-column prop="customerName" name="Customer Name"></ngx-datatable-column>
+            <ngx-datatable-column name="addedDate">
+              <ng-template let-value="value" ngx-datatable-cell-template>
+                {{value | date:"dd/MM/yyyy": "ar-EG"}}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="modifiedDate" name="Modified Date">
+              <ng-template let-value="value" ngx-datatable-cell-template>
+                {{value | date:"dd/MM/yyyy": "ar-EG"}}
+              </ng-template>
+            </ngx-datatable-column>
+            <!-- Edit -->
+            <ngx-datatable-column name='Edit' prop='edit' *ngIf="AuthService.hasRole(7)" [width]="80" [sortable]="false"
+              [canAutoResize]="false" [draggable]="false" [resizeable]="false">
+              <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                <!-- Pencil icon -->
+                <button type="button" class="btn btn-warning edit" (click)="edit(row)">
+                  <i class="fa fa-pencil" title="Modify"></i>
+                </button>
+              </ng-template>
+            </ngx-datatable-column>
+            <!-- Delete -->
+            <ngx-datatable-column name='Delete' prop='delete' *ngIf="AuthService.hasRole(8)" [width]="80"
+              [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false">
+              <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                <button type="button" class="btn btn-danger edit" (click)="delete(row,rowIndex)">
+                  <i class="fa fa-trash-o" title="Delete"></i>
+                </button>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name='Details' [width]="60" [sortable]="false" [canAutoResize]="false"
+              [draggable]="false" [resizeable]="false">
+              <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                <!-- Pencil icon -->
+                <button type="button" class="btn btn-info edit" (click)="gotToDetails(row)">
+                  <i class="fa fa-eye" title="Details"></i>
+                </button>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+          <ngb-pagination [collectionSize]="pageCount*10" (pageChange)="pageChanged($event)" [maxSize]="5"
+            [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Container-fluid starts -->

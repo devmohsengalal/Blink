@@ -1,0 +1,87 @@
+<!-- Container-fluid starts -->
+<div class="container-fluid">
+  <div class="page-header">
+    <div class="row">
+      <div class="col-lg-6">
+        <h3>{{cardheader}}
+          <small> Roles Form</small>
+        </h3>
+      </div>
+      <div class="col-lg-6">
+        <ol class="breadcrumb pull-right">
+          <li class="breadcrumb-item"><a [routerLink]="'/dashboard'"><i class="fa fa-home"></i></a></li>
+          <li class="breadcrumb-item active">Roles</li>
+          <li class="breadcrumb-item active">{{cardheader}}</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Container-fluid Ends -->
+
+<!-- Container-fluid starts -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <form class="theme-form" [formGroup]="RoleForm" (ngSubmit)="onSubmit()">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="RoleName">Role Name</label>
+                  <input type="email" class="form-control" formControlName="RoleName" id="RoleName"
+                    placeholder="RoleName">
+                  <div *ngIf="RoleForm.get('RoleName').invalid && submited">
+                    <div *ngIf="RoleForm.get('RoleName').errors['required']" class="text text-danger">
+                      RoleName is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6" [ngClass]="{'hidden':custHidden}">
+                <label class="col-form-label">Customers</label>
+                <input type="text" class="form-control form-control-sm cust-search" (click)="open()"
+                  formControlName="customerId" [value]="customerName" placeholder="Customer">
+                <i class="fa fa-search"></i>
+                <div *ngIf="!RoleForm.get('customerId').valid"><span class="err">*</span>
+                  <small class="text text-danger" *ngIf="RoleForm.get('customerId').errors['required']">This field is
+                    required.</small>
+                </div>
+              </div>
+            </div>
+            <ngb-tabset>
+              <ngb-tab *ngFor="let item of PermissionsTitleList" [title]="item.name">
+                <ng-template ngbTabContent>
+                  <div class="col">
+                    <div class="form-group m-t-15 m-checkbox-inline mb-0">
+                      <div class="checkbox checkbox-dark">
+                        <input id="sAll" type="checkbox" [checked]="item.checked" (change)="checkAll($event,item)">
+                        <label for="sAll">{{item.chkText}}</label>
+                      </div>
+                    </div>
+                    <div class="form-group m-t-15 m-checkbox-inline mb-0">
+                      <div class="checkbox checkbox-dark"
+                        *ngFor="let itemchck of filterItemsOfType(item.id,PermissionsList)">
+                        <input [id]="'chck_'+itemchck.id.toString()" [name]="item.name" type="checkbox"
+                          [checked]="itemchck.checked" (change)="me($event,itemchck.id)">
+                        <label [for]="'chck_'+itemchck.id.toString()">{{itemchck.name}}</label>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </ngb-tab>
+            </ngb-tabset>
+            <hr>
+            <button type="submit" class="btn btn-square btn-primary mr-1">Save</button>
+            <div *ngIf="showLoader" class="partialLoader">
+              <app-self-building-square-spinner [animationDuration]="1000" [size]="60" [color]="'#fac31e '">
+              </app-self-building-square-spinner>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Container-fluid starts -->

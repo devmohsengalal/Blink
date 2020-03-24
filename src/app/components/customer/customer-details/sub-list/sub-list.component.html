@@ -1,0 +1,30 @@
+<div class="modal-header">
+  <h4 class="modal-title">Subscription Details</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="card">
+    <div class="card-header b-l-primary border-5">
+      <h5>{{subDetails?.addedByName}}
+      </h5>
+    </div>
+    <div class="card-body">
+      <p><span>Start Date:</span> {{subDetails?.addedDate | date }}</p>
+      <p><span>Start Time:</span> {{subDetails?.addedDate  | date:'shortTime'}}</p>
+      <p><span>End Date:</span> {{subDetails?.endDate | date}}</p>
+      <p><span>End Time:</span> {{subDetails?.endDate | date:'shortTime'}}</p>
+      <p><span>Number Of End User:</span> {{subDetails?.noOfEndUser}}</p>
+      <p><span>Is Current:</span> {{subDetails?.isCurrent}}</p>
+      <div class="btn-wid ">
+        <p class="wid"><span>Api Key:</span> {{subDetails?.apiKey}}</p>
+        <button (click)="copyText()" type="button" value=" copy" class="btn cpy-btn" ngbTooltip="Copied Successfully!"
+          triggers="click:blur">Copy</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Close</button>
+</div>

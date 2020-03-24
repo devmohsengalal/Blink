@@ -1,0 +1,74 @@
+<div class="container-fluid">
+  <div class="page-header">
+    <div class="row">
+      <div class="col-lg-6">
+        <h3>Import End User
+        </h3>
+      </div>
+      <div class="col-lg-6">
+        <ol class="breadcrumb pull-right">
+          <li class="breadcrumb-item"><a [routerLink]="'/dashboard/default'"><i class="fa fa-home"></i></a></li>
+          <li class="breadcrumb-item">Import End User</li>
+          <li class="breadcrumb-item">Import End User Excel Sheet</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header">
+          Download and fill the Default Sheet then Upload it.
+        </div>
+        <div class="card-body text-center">
+          <a href="/assets/Enduser blink.xlsx" class="btn btn-success" download>Download Default Sheet</a>
+        </div>
+      </div>
+      <div class="card">
+        <form class="form theme-form" [formGroup]="importForm" (ngSubmit)="Upload()">
+          <div class="card-header">
+            Upload The filled Sheet
+          </div>
+          <div class="card-body">
+            <div class="row" [ngClass]="{'hidden':custHidden}">
+              <div class="col">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Customers</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control form-control-sm cust-search" (click)="open()"
+                      formControlName="customerId" [value]="customerName" placeholder="Customer">
+                    <i class="fa fa-search"></i>
+                    <div *ngIf="!importForm.get('customerId').valid && isSubmitted"><span class="err">*</span>
+                      <small class="text text-danger" *ngIf="importForm.get('customerId').errors['required']">This field
+                        is
+                        required.</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Upload End User Sheet</label>
+                  <div class="col-sm-9">
+                    <input type="file" class="form-control" (change)="incomingfile($event)" placeholder="Upload file"
+                      accept=".xlsx">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary">upload</button>
+            <div *ngIf="showLoader" class="partialLoader">
+              <app-self-building-square-spinner [animationDuration]="1000" [size]="60" [color]="'#fac31e '">
+              </app-self-building-square-spinner>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

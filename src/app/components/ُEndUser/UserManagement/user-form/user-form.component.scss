@@ -1,0 +1,30 @@
+.hidden{
+    display: none
+}
+.files{
+    visibility: hidden;
+    height: 0;
+    position: absolute;
+    bottom: 0;
+}
+.btn-info{
+    display: block;
+    margin: 15px 34% 0;
+}
+.form-group{
+    margin-top:30px !important
+}
+.btn{
+    padding: 0.375rem 0.75rem !important
+}
+i.fa.fa-search
+{
+    position: absolute;
+    right: 5%;
+    bottom: 9px;
+}
+.cust-search
+{
+    cursor: pointer;
+}
+

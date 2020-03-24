@@ -1,0 +1,146 @@
+<!-- Container-fluid starts -->
+<div class="container-fluid">
+  <div class="page-header">
+    <div class="row">
+      <div class="col-lg-6">
+        <h3>Accounts</h3>
+      </div>
+      <div class="col-lg-6">
+        <ol class="breadcrumb pull-right">
+          <li class="breadcrumb-item"><a [routerLink]="'/dashboard/default'"><i class="fa fa-home"></i></a></li>
+          <li class="breadcrumb-item active">Accounts</li>
+          <li class="breadcrumb-item active">List Accounts</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Container-fluid Ends -->
+<!-- Container-fluid starts -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <form class="form theme-form" [formGroup]="accForm">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-6">
+                <label class="col-form-label">Role</label>
+                <ngx-select-dropdown (change)="selectionChangedRole($event)" formControlName="roleId" [multiple]="false"
+                  [config]="config" [options]="dropdownOptions"></ngx-select-dropdown>
+              </div>
+
+              <div class="col-sm-6">
+                <label class="col-form-label">Full Name</label>
+                <input type="text" class="form-control form-control-sm" formControlName="fullName"
+                  placeholder="Full Name">
+              </div>
+              <div class="col-sm-6">
+                <label class="col-form-label">Username</label>
+                <input type="text" class="form-control form-control-sm" formControlName="username"
+                  placeholder="Username">
+              </div>
+              <div class="col-sm-6">
+                <label class="col-form-label">Email</label>
+                <input type="email" class="form-control form-control-sm" formControlName="email" placeholder="Email">
+              </div>
+
+              <div class="col-sm-6">
+                <label class="col-form-label">Country</label>
+                <ngx-select-dropdown (change)="selectionChangedCountry($event)" [multiple]="false" [config]="config5"
+                  [options]="dropdownOptions5"></ngx-select-dropdown>
+
+              </div>
+              <div class="col-sm-6">
+                <label class="col-form-label">State</label>
+                <ngx-select-dropdown (change)="selectionChangedState($event)" formControlName="stateId"
+                  [multiple]="false" [config]="config2" [options]="dropdownOptions2"></ngx-select-dropdown>
+              </div>
+              <div class="col-sm-6">
+                <label class="col-form-label">Phone Number</label>
+                <input type="text" class="form-control form-control-sm" appPhoneNum formControlName="phone"
+                  placeholder="ex: +20100000XXXX">
+                <div *ngIf="!accForm.get('phone').valid && isSubmitted"><span class="err">*</span>
+                  <small class="text text-danger" *ngIf="accForm.get('phone').errors['pattern']">Insert only
+                    Numbers</small>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label class="col-form-label">Status</label>
+                <ngx-select-dropdown (change)="selectionChangedStatus($event)" formControlName="isActive"
+                  [multiple]="false" [config]="config4" [options]="dropdownOptions4"></ngx-select-dropdown>
+              </div>
+              <div class="col-sm-6" [ngClass]="{'hidden':custHidden}">
+                <label class="col-form-label">Customers</label>
+                <input type="text" class="form-control form-control-sm cust-search" (click)="open()"
+                  formControlName="customerId" [value]="customerName" placeholder="Customer">
+                <i class="fa fa-search"></i>
+              </div>
+              <div class="col-sm-6">
+                <label class="col-form-label">Maximum Rows</label>
+                <select formControlName="maximum" class="form-control form-control-sm cust-search">
+                  <option value="10">10</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary mb-1" (click)="search()">Search</button>
+            <div *ngIf="showLoader" class="partialLoader">
+              <app-self-building-square-spinner [animationDuration]="1000" [size]="60" [color]="'#fac31e '">
+              </app-self-building-square-spinner>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <input type='text' class="filter-ngx" placeholder='Type to filter the UserName'
+            (keyup)='updateFilter($event)' />
+          <ngx-datatable #table class='bootstrap' [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
+            [rowHeight]="'auto'" [rows]='rows'>
+            <ngx-datatable-column prop="customerName" name="Customer Name"></ngx-datatable-column>
+            <ngx-datatable-column prop="fullName" name="Full Name"></ngx-datatable-column>
+            <ngx-datatable-column prop="userName" name="Username"></ngx-datatable-column>
+            <ngx-datatable-column prop="phoneNumber" name="Phone Number"></ngx-datatable-column>
+            <ngx-datatable-column prop="isCustomerAdmin" name="Is Admin"></ngx-datatable-column>
+            <ngx-datatable-column prop="isActive" name="Is Active"></ngx-datatable-column>
+            <!-- Edit -->
+            <ngx-datatable-column name='Edit' [width]="60" [sortable]="false" [canAutoResize]="false"
+              [draggable]="false" [resizeable]="false" *ngIf="AuthService.hasRole(2)">
+              <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                <!-- Pencil icon -->
+                <button type="button" class="btn btn-warning edit" (click)="onEdit(row)">
+                  <i class="fa fa-pencil" title="Modify"></i>
+                </button>
+              </ng-template>
+            </ngx-datatable-column>
+            <!-- Delete -->
+            <ngx-datatable-column name='Delete' [width]="60" [sortable]="true" [canAutoResize]="true"
+              [draggable]="false" [resizeable]="true" *ngIf="AuthService.hasRole(3)">
+              <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                <button class="btn btn-danger edit" (click)="onDelete(row)">
+                  <i class="fa fa-trash-o" title="Delete"></i>
+                </button>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name='Details' [width]="60" [sortable]="false" [canAutoResize]="false"
+              [draggable]="false" [resizeable]="false">
+              <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                <!-- Pencil icon -->
+                <button type="button" class="btn btn-info edit" (click)="gotToDetails(row)">
+                  <i class="fa fa-eye" title="Details"></i>
+                </button>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+          <ngb-pagination [collectionSize]="pageCount*10" (pageChange)="pageChanged($event)" [maxSize]="5"
+            [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

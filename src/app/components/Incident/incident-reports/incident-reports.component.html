@@ -1,0 +1,127 @@
+<div class="container-fluid">
+  <div class="page-header">
+    <div class="row">
+      <div class="col-lg-6">
+        <h3>Incident Reports
+          <small>search for Incident</small>
+        </h3>
+      </div>
+      <div class="col-lg-6">
+        <ol class="breadcrumb pull-right">
+          <li class="breadcrumb-item"><a [routerLink]="'/dashboard/default'"><i class="fa fa-home"></i></a></li>
+          <li class="breadcrumb-item">Incident Reports </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <form [formGroup]="incidentForm">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-6">
+                <label class=" col-form-label">Username</label>
+                <input type="text" class="form-control form-control-sm" placeholder="username" formControlName="name">
+              </div>
+
+              <div class="col-sm-6" [ngClass]="{'hidden':custHidden}">
+                <label class="col-form-label">Customers</label>
+                <input type="text" class="form-control form-control-sm cust-search" (click)="open()"
+                  formControlName="customerId" [value]="customerName" placeholder="Customer">
+                <i class="fa fa-search"></i>
+              </div>
+              <div class="col-sm-6">
+                <label class="col-form-label">Name</label>
+                <ngx-select-dropdown (change)="selectionChangedUser($event)" formControlName="endUserId"
+                  [multiple]="false" [config]="config2" [options]="dropdownOptions2"></ngx-select-dropdown>
+              </div>
+              <div class="col-sm-6" [ngClass]="{'hidden':custHidden}">
+                <label class="col-form-label">Customers</label>
+                <input type="text" class="form-control form-control-sm cust-search" (click)="open()"
+                  formControlName="customerId" [value]="customerName" placeholder="Customer">
+                <i class="fa fa-search"></i>
+              </div>
+              <div class="col-sm-6">
+                <label class="col-form-label">Name</label>
+                <ngx-select-dropdown (change)="selectionChangedUser($event)" formControlName="endUserId"
+                  [multiple]="false" [config]="config2" [options]="dropdownOptions2" class="col-sm-9">
+                </ngx-select-dropdown>
+              </div>
+              <div class="col-sm-6">
+                <label class=" col-form-label">Phone</label>
+                <input type="text" appPhoneNum class="form-control form-control-sm" placeholder="ex: +20100000XXXX"
+                  formControlName="phone">
+              </div>
+              <div class="col-sm-6">
+                <label class="col-form-label">Start Date</label>
+                <div class="input-group">
+                  <input class="form-control form-control-sm" placeholder="Choose Start Date" name="dp1" ngbDatepicker
+                    #d="ngbDatepicker" (click)="d.open()" formControlName="startDate">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label class="col-form-label">End Date</label>
+                <div class="input-group">
+                  <input class="form-control form-control-sm" placeholder="Choose End Date" name="dp2" ngbDatepicker
+                    #d1="ngbDatepicker" (click)="d1.open()" formControlName="endDate">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button"></button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label class="col-form-label">Maximum Rows</label>
+                <select formControlName="maximum" class="form-control form-control-sm cust-search">
+                  <option value="10">10</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary" (click)="search()"
+              *ngIf="AuthService.hasRole(35)">Search</button>
+
+            <div *ngIf="showLoader" class="partialLoader">
+              <app-self-building-square-spinner [animationDuration]="1000" [size]="60" [color]="'#fac31e '">
+              </app-self-building-square-spinner>
+            </div>
+          </div>
+        </form>
+      </div>
+
+    <div class="card">
+      <div class="card-body">
+        <input type='text' class="filter-ngx" placeholder='Type to filter the name' (keyup)='updateFilter($event)' />
+        <ngx-datatable #table class='bootstrap' [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
+          [rowHeight]="'auto'" [limit]="10" [rows]='rows'>
+
+          <ngx-datatable-column prop="endUser.name" name="Name"></ngx-datatable-column>
+          <ngx-datatable-column prop="endUser.phone" name="Phone"></ngx-datatable-column>
+          <ngx-datatable-column prop="incidentType.name" name="Incident Type"></ngx-datatable-column>
+          <ngx-datatable-column prop="date" name="Date">
+            <ng-template let-value="value" ngx-datatable-cell-template>
+              {{value | date:"dd/MM/yyyy HH:mm:ss": "ar-EG"}}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column prop="Details" name='Details' [width]="60" [sortable]="true" [canAutoResize]="true"
+            [draggable]="false" [resizeable]="true">
+            <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+              <button type="button" class="btn btn-info" (click)="goToDetails(row)">
+                <i class="fa fa-eye" title="Modify"></i>
+              </button>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+        <ngb-pagination [collectionSize]="pageCount*10" (pageChange)="pageChanged($event)" [maxSize]="5" [rotate]="true"
+          [boundaryLinks]="true"></ngb-pagination>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>

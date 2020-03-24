@@ -1,0 +1,21 @@
+.hidden{
+    display:none
+}
+
+i.fa.fa-search
+{
+    position: absolute;
+    right: 5%;
+    bottom: 9px;
+}
+.cust-search
+{
+    cursor: pointer;
+}
+.search{
+    display: block;
+    margin: 25px 5px 15px;
+}
+:host ::ng-deep .page-count{
+    display: none
+}

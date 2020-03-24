@@ -1,0 +1,37 @@
+.btn-primary {
+  margin: 20px;
+  display: inline-block
+}
+
+table td,
+table th {
+  text-align: center;
+  padding: 7px
+}
+
+.hidden {
+  display: none
+}
+
+.m-checkbox-inline label {
+  margin-left: 20px;
+}
+
+.search {
+  display: block;
+  margin: 25px 5px 15px;
+}
+
+i.fa.fa-search {
+  position: absolute;
+  right: 5%;
+  bottom: 9px;
+}
+
+.cust-search {
+  cursor: pointer;
+}
+
+:host ::ng-deep .page-count {
+  display: none
+}
