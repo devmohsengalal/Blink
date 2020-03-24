@@ -13,6 +13,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { SelectDropDownModule } from 'ngx-select-dropdown'
 import { AppConfigService } from '../AppConfigService'
 import { APP_INITIALIZER } from '@angular/core';
+import { AgmCoreModule } from '@agm/core';
 
 
 import { AppComponent } from './app.component';
@@ -121,7 +122,10 @@ import { PhoneNumDirective } from './phone-num.directive';
     NgxDatatableModule,
     NgbModule,
     SelectDropDownModule,
-    NgbPaginationModule
+    NgbPaginationModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyDEN6pAJzW2cNyk4-zpEscPa3PG_hDJ_Uw'
+    })
   ],
   entryComponents: [NgxModalComponent,CustSearchModalComponent,
     AccidentDetailsComponent,AccountDetailsComponent,
