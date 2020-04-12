@@ -27,6 +27,11 @@
       <p><span>Reported By:</span> {{incidentDetails?.reportedBy}}</p>
       <p><span>Reported By:</span> {{incidentDetails?.incidentType?.name}}</p>
     </div>
+    <div class="card-body">
+      <agm-map [latitude]="+incidentDetails?.latitude" [longitude]="+incidentDetails?.longitude">
+        <agm-marker [latitude]="+incidentDetails?.latitude" [longitude]="+incidentDetails?.longitude"></agm-marker>
+      </agm-map>
+    </div>
   </div>
 </div>
 <div class="modal-footer">
