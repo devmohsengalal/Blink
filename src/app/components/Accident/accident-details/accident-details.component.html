@@ -27,7 +27,7 @@
       <p><span>Reported By:</span> {{accidentDetails?.reportedBy}}</p>
     </div>
     <div class="card-body">
-      <agm-map [latitude]="+accidentDetails?.latitude" [longitude]="+accidentDetails?.longitude">
+      <agm-map   [zoom]="15" [latitude]="+accidentDetails?.latitude" [longitude]="+accidentDetails?.longitude">
         <agm-marker [latitude]="+accidentDetails?.latitude" [longitude]="+accidentDetails?.longitude"></agm-marker>
       </agm-map>
     </div>

@@ -25,7 +25,7 @@
       <p><span>End Time:</span> {{tripSearch?.endTime | date:'shortTime'}}</p>
     </div>
     <div class="card-body">
-      <agm-map [latitude]="+tripSearch?.startLat" [longitude]="+tripSearch?.startLong">
+      <agm-map  [zoom]="15" [latitude]="+tripSearch?.startLat" [longitude]="+tripSearch?.startLong">
         <agm-marker [latitude]="+tripSearch?.startLat" [longitude]="+tripSearch?.startLong"></agm-marker>
       </agm-map>
     </div>
