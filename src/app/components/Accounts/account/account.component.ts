@@ -18,6 +18,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CustSearchModalComponent } from 'src/app/shared/cust-search-modal/cust-search-modal.component';
 import { AccountDetailsComponent } from '../account-details/account-details.component';
 import { forkJoin } from 'rxjs';
+import { ChangePasswordComponent } from '../change-password/change-password.component';
 
 
 @Component({
@@ -380,6 +381,17 @@ export class AccountComponent implements OnInit, OnDestroy {
         this.tostr.error(err);
         this.showLoader = false;
       })
+  }
+  onChangePass(row)
+  {
+    const modalRef = this.modalService.open(ChangePasswordComponent, {
+      size: "lg",
+    });
+    modalRef.componentInstance.id = row.id;
+    modalRef.result.then((res)=>{
+      console.log(res);
+      
+    })
   }
 
   ngOnDestroy(): void {

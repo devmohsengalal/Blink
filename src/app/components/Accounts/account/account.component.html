@@ -106,6 +106,18 @@
             <ngx-datatable-column prop="phoneNumber" name="Phone Number"></ngx-datatable-column>
             <ngx-datatable-column prop="isCustomerAdmin" name="Is Admin"></ngx-datatable-column>
             <ngx-datatable-column prop="isActive" name="Is Active"></ngx-datatable-column>
+            <!-- Change Pass -->
+            <ngx-datatable-column name='Password' [width]="80" [sortable]="false" [canAutoResize]="false"
+              [draggable]="false" [resizeable]="false" *ngIf="AuthService.hasRole(2)">
+              <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                <!-- Pencil icon -->
+              <div class="text-center">
+                <button type="button" class="btn btn-warning edit pass-btn" (click)="onChangePass(row)">
+                  <i class="fa fa-key" title="change Password"></i>
+                </button>
+              </div>
+              </ng-template>
+            </ngx-datatable-column>
             <!-- Edit -->
             <ngx-datatable-column name='Edit' [width]="60" [sortable]="false" [canAutoResize]="false"
               [draggable]="false" [resizeable]="false" *ngIf="AuthService.hasRole(2)">

@@ -60,6 +60,7 @@ import { VehicleDetailsComponent } from './components/vehicle/vehicle-details/ve
 import { RenewSubResultComponent } from './components/customer/renew-sub/renew-sub-result/renew-sub-result.component';
 import { NotificationComponent } from './components/notification/notification.component';
 import { PhoneNumDirective } from './phone-num.directive';
+import { ChangePasswordComponent } from './components/Accounts/change-password/change-password.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -99,6 +100,7 @@ import { PhoneNumDirective } from './phone-num.directive';
     RenewSubResultComponent,
     NotificationComponent,
     PhoneNumDirective,
+    ChangePasswordComponent,
   ],
   imports: [
     SwappingSquaresSpinnerModule,
@@ -132,7 +134,7 @@ import { PhoneNumDirective } from './phone-num.directive';
     IncidentDetailsComponent,TripDetailsComponent,
     CustomerDetailsComponent,RoleDetailsComponent,
     EndUserDetailsComponent,SubListComponent, 
-    VehicleDetailsComponent,RenewSubResultComponent],
+    VehicleDetailsComponent,RenewSubResultComponent,ChangePasswordComponent],
   providers: [{
     provide: APP_INITIALIZER,
     multi: true,

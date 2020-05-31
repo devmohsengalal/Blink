@@ -22,7 +22,7 @@ export class AccountService {
   public addUrl = "/api/Account/Add";
   public editUrl = "/api/Account/Edit";
   public delUrl = "/api/Account/Remove";
-
+  public ChangeAdminPasswordUrl = "/api/Account/ChangeAdminPassword"
   getAccount(id: number): Observable<any> {
     return this.http.get(this.url.accountUrl + this.getUrl + id, this.httpOptions);
   }
@@ -38,5 +38,7 @@ export class AccountService {
   listAccounts(acc: any) {
     return this.http.post(this.url.accountUrl + this.listUrl, acc, this.httpOptions);
   }
-
+  changeAdminPassword(obj: {id:number,password:string}) {
+    return this.http.post<{statusCode:number,data:any}>(this.url.accountUrl + this.ChangeAdminPasswordUrl, obj, this.httpOptions);
+  }
 }
