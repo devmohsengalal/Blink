@@ -126,7 +126,7 @@ import { ChangePasswordComponent } from './components/Accounts/change-password/c
     SelectDropDownModule,
     NgbPaginationModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyDEN6pAJzW2cNyk4-zpEscPa3PG_hDJ_Uw'
+      apiKey: 'AIzaSyDMfBwy31BOxcyyNTwJWEiJ9E-6yxj5v2M'
     })
   ],
   entryComponents: [NgxModalComponent,CustSearchModalComponent,
