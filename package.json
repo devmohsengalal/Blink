@@ -35,7 +35,7 @@
     "classlist.js": "^1.1.20150312",
     "core-js": "^2.5.4",
     "countup.js-angular2": "^6.1.1",
-    "datatables.net": "^1.10.19",
+    "datatables.net": "^1.10.22",
     "datatables.net-dt": "^1.10.19",
     "datatables.net-select": "^1.2.7",
     "datatables.net-select-dt": "^1.2.7",
